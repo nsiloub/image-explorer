@@ -1,0 +1,63 @@
+/** STYLES FOR THE FILTER (PARENT) **/
+
+.filter {
+    display: flex;
+}
+:root {
+    --drop-width: 200px;
+    --drop-padding: 1.5% 8%;
+}
+/** STYLES FOR THE FILTER END **/
+
+
+
+/* STYLES FOR THE DROPDOWN */
+
+.categories-container {
+    width: var(--drop-width);
+
+}
+
+
+.dropdown-button {
+    width: 100%;
+    padding: var(--drop-padding);
+    display: flex;
+    justify-content: center;
+}
+
+.dropdown-button > div {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.dropdown_icon {
+    width: 0.8rem;
+}
+
+.menu-container {
+    position: relative;
+    width: var(--drop-width);
+    
+}
+.categories {
+    position: absolute;
+    height: 80px;
+    width: 100%;
+    margin-top: 10%;
+    padding: var(--drop-padding);
+    overflow: scroll;
+    background-color: #ffffff;
+    border-radius: 0.9rem;
+}
+.category_list_title {
+    border-radius: 0;
+    
+}
+
+/** STYLES FOR THE DROPDOWN END **/
+
+
+
+/* STYLES FOR THE SEARCH */

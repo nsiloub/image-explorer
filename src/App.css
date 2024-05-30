@@ -1,0 +1,13 @@
+ul, ol, li {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+header, main {
+  background-color: #7B43D6;
+}
+
+.button {
+  border-radius: 0.9rem;
+}

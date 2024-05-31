@@ -10,4 +10,6 @@ header, main {
 
 .button {
   border-radius: 0.9rem;
+  border: none;
+  background-color:white;
 }

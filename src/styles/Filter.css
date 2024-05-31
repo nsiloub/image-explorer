@@ -4,8 +4,8 @@
     display: flex;
 }
 :root {
-    --drop-width: 200px;
-    --drop-padding: 1.5% 8%;
+    --dropdown-width: 200px;
+    --dropdown-padding: 1.5% 8%;
 }
 /** STYLES FOR THE FILTER END **/
 
@@ -14,14 +14,14 @@
 /* STYLES FOR THE DROPDOWN */
 
 .categories-container {
-    width: var(--drop-width);
+    width: var(--dropdown-width);
 
 }
 
 
 .dropdown-button {
     width: 100%;
-    padding: var(--drop-padding);
+    padding: var(--dropdown-padding);
     display: flex;
     justify-content: center;
 }
@@ -35,18 +35,38 @@
 .dropdown_icon {
     width: 0.8rem;
 }
+.dropdown_icon--flip {
+    transform: rotate(180deg);
 
-.menu-container {
-    position: relative;
-    width: var(--drop-width);
-    
+    transition-property: transform;
+    transition-timing-function: ease;
+    transition-duration: 300ms;
 }
+
+.menu-wrapper {
+    position: relative;
+    width: var(--dropdown-width);
+    visibility: hidden;
+    opacity: 0;
+
+    transform: translateY(1.5rem);
+    transition-property: transform, opacity, visibility;
+    transition-duration: 300ms;
+    transition-timing-function: ease;
+
+}
+.menu-wrapper--show {
+    visibility: visible;
+    opacity: 1;
+    transform: translateY(0rem);
+}
+
 .categories {
     position: absolute;
     height: 80px;
     width: 100%;
-    margin-top: 10%;
-    padding: var(--drop-padding);
+    margin-top: 7%;
+    padding: var(--dropdown-padding);
     overflow: scroll;
     background-color: #ffffff;
     border-radius: 0.9rem;

@@ -3,6 +3,7 @@ import "./App.css";
 import FocusedImage from "./components/FocusedImage";
 import Footer from "./components/Footer";
 import CardsList from "./components/CardsLists";
+import { useState } from "react";
 
 type ReactJsxElm = React.JSX.Element;
 
@@ -24,12 +25,15 @@ function ResultsMsg(): ReactJsxElm {
 
 
 function FilterableGallery(): ReactJsxElm {
+  const [category, setCategory] = useState<string>("Categories")
+
+  
   return (
-    <>
+    <div className="filterable-gallery">
       <FocusedImage />
       <header className="logo-and-filter">
         <Logo />
-        <Filter />
+        <Filter category={category} changeCategory={setCategory}/>
       </header>
       <main>
         <ResultsMsg />
@@ -38,7 +42,7 @@ function FilterableGallery(): ReactJsxElm {
       </main>
       <Footer />
     
-    </>
+    </div>
   )
 }
 

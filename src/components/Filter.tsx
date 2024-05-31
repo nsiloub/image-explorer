@@ -50,24 +50,6 @@ function Categories({selectedCategory, changeCategory}: MyCategoriesProps): Reac
         };
     }, [dropdownHidden])
 
-    // function handleCategoryTitleClick(): void {
-    //     console.log("you clicked");
-
-    //     categoriesButtonsList.forEach((button) => {
-    //         function handleClick(event: Event ) {
-    //             event.preventDefault();
-    //             const target = event.target as HTMLButtonElement;
-    //             // const { target } = event;
-    //             changeCategory(target.innerHTML);
-
-    //         }
-
-    //         button.addEventListener("click", handleClick);
-    //     })
-
-
-    // };
-
     const categoriesNames: string[] = "backgrounds, fashion, nature, science, education, feelings, health, people, religion, places, animals, industry, computer, food, sports, transportation, travel, buildings, business, music".split(", ");
 
     const categoriesList: ReactJsxElm[] = categoriesNames.map((category,) => {

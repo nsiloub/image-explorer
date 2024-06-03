@@ -13,3 +13,13 @@ header, main {
   border: none;
   background-color:white;
 }
+
+input:focus,
+button:focus
+{
+  outline: none;
+}
+
+.hide {
+  visibility: hidden;
+}

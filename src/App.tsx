@@ -26,18 +26,18 @@ function ResultsMsg(): ReactJsxElm {
 
 function FilterableGallery(): ReactJsxElm {
   const [category, setCategory] = useState<string>("Categories")
+  const [searchValue, setSearchValue] = useState<string>("");
 
-  
   return (
     <div className="filterable-gallery">
       <FocusedImage />
       <header className="logo-and-filter">
         <Logo />
-        <Filter category={category} changeCategory={setCategory}/>
+        <Filter category={category} changeCategory={setCategory} searchValue={searchValue} changeSearchValue={setSearchValue}/>
       </header>
       <main>
         <ResultsMsg />
-        <CardsList />
+        {/* <CardsList /> */}
         <button className="load-more">Load More</button>
       </main>
       <Footer />

@@ -15,10 +15,14 @@ function Logo(): ReactJsxElm {
   )
 }
 
-function ResultsMsg(): ReactJsxElm {
+type MyResultsMsgProps = {
+  numberOfRuslts: number, 
+  searchTerm: string
+}
+function ResultsMsg({numberOfRuslts, searchTerm}: MyResultsMsgProps): ReactJsxElm {
   return(
     <section className="message">
-      <p><strong>7</strong> Images Found For the term <strong>Your Term</strong></p>
+      <p><strong>{numberOfRuslts}</strong> Images Found For the term <strong>{searchTerm}</strong></p>
     </section>
   )
 };
@@ -63,7 +67,7 @@ function FilterableGallery(): ReactJsxElm {
         <Filter category={category} changeCategory={setCategory} searchValue={searchValue} changeSearchValue={setSearchValue} reRenderedByUser={pageRerenderedByUser}/>
       </header>
       <main>
-        <ResultsMsg />
+        <ResultsMsg searchTerm={searchValue} numberOfRuslts={7}/>
         {/* <CardsList /> */}
         <button className="load-more">Load More</button>
       </main>

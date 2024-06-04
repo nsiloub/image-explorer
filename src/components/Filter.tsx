@@ -16,10 +16,15 @@ function Categories({selectedCategory, changeCategory, pageRerenderedByUser}: My
 
     const dropdownIcon =  document.querySelector<HTMLSpanElement>(".category-component_dropdown-btn_icon");
     const menuWrapper = document.querySelector<HTMLDivElement>(".categories-component_menu-wrapper");
-    const categoriesComponent = document.querySelector<HTMLDivElement>(".categories-component");
-    
+    const dropDownBtn = document.querySelector<HTMLButtonElement>('.category-component_dropdown-btn');
 
     useEffect(() => {
+
+        dropDownBtn?.addEventListener("focus", handleDropDownFocus);
+        function handleDropDownFocus(): void {
+            setDropdownHidden(false);
+        };
+
         window.addEventListener("mousedown", handleClickedAway);
         function handleClickedAway(e: Event): void {
 
@@ -32,16 +37,15 @@ function Categories({selectedCategory, changeCategory, pageRerenderedByUser}: My
             };
             if(!classList.contains("refocus-dropdown")){
                 setDropdownHidden(true);
-                console.log("clicked away")
             };
             if(classList.contains("refocus-dropdown")) {
                 setDropdownHidden(false);
-                console.log('clicked again')
             }
         };
 
         return () => {
             window.removeEventListener("mousedown", handleClickedAway);
+            dropDownBtn?.removeEventListener("focus", handleDropDownFocus);
         }
     }, [dropdownHidden, pageRerenderedByUser]);
 
@@ -111,7 +115,8 @@ function Search({category, changeSearchValue, reRenderedByUser}: MySearcProps): 
 
 
 
-
+    // Functionalities for hiding and showint the 
+    // search icon or clear button;
     useEffect(() => {
         
         function handleSearchBarFocused(): void {
@@ -136,7 +141,8 @@ function Search({category, changeSearchValue, reRenderedByUser}: MySearcProps): 
 
                     setClearSearchBtnFocused(true);
                     if(searchBar) {
-                        searchBar.value = ""
+                        searchBar.value = "";
+                        changeSearchValue("")
                     }
                 } else {
                     setClearSearchBtnFocused(false);
@@ -169,6 +175,26 @@ function Search({category, changeSearchValue, reRenderedByUser}: MySearcProps): 
         searchBarIcon?.classList.add("hide");
     };
 
+    
+    searchBar?.addEventListener("keyup", handleUserKeyUped);
+    function handleUserKeyUped(e: Event): void {
+        const target = e.target as HTMLInputElement
+
+        const delay = 2000;
+
+        let sendTextTimeout = 0;
+        clearTimeout(sendTextTimeout);
+
+        sendTextTimeout = setTimeout(() => {
+            changeSearchValue(target.value);
+        }, delay)
+
+
+
+
+
+
+    };
     
     return(
         <div className="search-component">

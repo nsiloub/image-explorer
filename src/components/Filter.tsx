@@ -13,6 +13,8 @@ type MyCategoriesProps = {
 function Categories({selectedCategory, changeCategory, pageRerenderedByUser}: MyCategoriesProps): ReactJsxElm {
     
     const [dropdownHidden, setDropdownHidden] = useState(true);
+    const [focusCounter, setFocusCounter] = useState(0);
+    const [reFocusCounter, setReFocusCounter] = useState(0);
 
     const dropdownIcon =  document.querySelector<HTMLSpanElement>(".category-component_dropdown-btn_icon");
     const menuWrapper = document.querySelector<HTMLDivElement>(".categories-component_menu-wrapper");
@@ -37,27 +39,41 @@ function Categories({selectedCategory, changeCategory, pageRerenderedByUser}: My
             };
             if(!classList.contains("refocus-dropdown")){
                 setDropdownHidden(true);
+                
+                setFocusCounter(0)
             };
             if(classList.contains("refocus-dropdown")) {
                 setDropdownHidden(false);
+
+                setFocusCounter(focusCounter + 1);     
             }
         };
+
+        if(focusCounter % 2 === 0) {
+            setDropdownHidden(true)
+        } else {
+            setDropdownHidden(false)
+        }
+    
 
         return () => {
             window.removeEventListener("mousedown", handleClickedAway);
             dropDownBtn?.removeEventListener("focus", handleDropDownFocus);
         }
-    }, [dropdownHidden, pageRerenderedByUser]);
+    }, [dropdownHidden, pageRerenderedByUser, focusCounter]);
+   
 
-    if(!dropdownHidden) {
-        dropdownIcon?.classList.add("'category'-component_dropdown-btn_icon--flip");
-        menuWrapper?.classList.add("categories-component_menu-wrapper--show");
-    };
-    if(dropdownHidden){
-        dropdownIcon?.classList.remove("category-component_dropdown-btn_icon--flip");
-        menuWrapper?.classList.remove("categories-component_menu-wrapper--show");         
+    switch(dropdownHidden) {
+        case true:
+            dropdownIcon?.classList.remove("category-component_dropdown-btn_icon--flip");
+            menuWrapper?.classList.remove("categories-component_menu-wrapper--show");         
+            break;
+        case false:
+            dropdownIcon?.classList.add("category-component_dropdown-btn_icon--flip");
+            menuWrapper?.classList.add("categories-component_menu-wrapper--show");
+            break;
     }
-
+    
     const categoriesNames: string[] = "backgrounds, fashion, nature, science, education, feelings, health, people, religion, places, animals, industry, computer, food, sports, transportation, travel, buildings, business, music".split(", ");
 
     const categoriesList: ReactJsxElm[] = categoriesNames.map((category,) => {

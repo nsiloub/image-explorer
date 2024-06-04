@@ -7,48 +7,52 @@ type ReactJsxElm = React.JSX.Element;
 type MyCategoriesProps = {
     selectedCategory: MyFilterProps["category"],
     changeCategory: MyFilterProps['changeCategory']
+    pageRerenderedByUser: MyFilterProps["reRenderedByUser"];
 }
 
-function Categories({selectedCategory, changeCategory}: MyCategoriesProps): ReactJsxElm {
-    const [counter, setCounter] = useState<number>(0);
+function Categories({selectedCategory, changeCategory, pageRerenderedByUser}: MyCategoriesProps): ReactJsxElm {
+    
+    const [dropdownHidden, setDropdownHidden] = useState(true);
 
-    let dropdownHidden: boolean = true;
-    counter % 2 === 0 ? dropdownHidden = true : dropdownHidden = false;
     const dropdownIcon =  document.querySelector<HTMLSpanElement>(".category-component_dropdown-btn_icon");
     const menuWrapper = document.querySelector<HTMLDivElement>(".categories-component_menu-wrapper");
+    const categoriesComponent = document.querySelector<HTMLDivElement>(".categories-component");
     
-    if(!dropdownHidden) {
-        dropdownIcon?.classList.add("category-component_dropdown-btn_icon--flip");
-        menuWrapper?.classList.add("categories-component_menu-wrapper--show");
-        
-        
-    } else {
-        dropdownIcon?.classList.remove("category-component_dropdown-btn_icon--flip");
-        menuWrapper?.classList.remove("categories-component_menu-wrapper--show");         
-
-    }
-    function handleDropdownToggle(): void {
-        setCounter(counter + 1);
-    }
-
-    const categoriesButtonsList = document.querySelectorAll<HTMLButtonElement>(".category_list_title");
 
     useEffect(() => {
-        function handleClick(event: Event): void {
-            const targetedButton = event.target as HTMLButtonElement;
-            changeCategory(targetedButton.innerHTML);
-        }
+        window.addEventListener("mousedown", handleClickedAway);
+        function handleClickedAway(e: Event): void {
 
-        categoriesButtonsList.forEach((button) => {
-            button.addEventListener("click", handleClick);
-        });
+            
+            const clickedTarget = e.target as HTMLElement;
+            const classList = clickedTarget.classList;
+
+            if(classList.contains("category-menu_list_title")) {
+                changeCategory(clickedTarget.innerHTML);
+            };
+            if(!classList.contains("refocus-dropdown")){
+                setDropdownHidden(true);
+                console.log("clicked away")
+            };
+            if(classList.contains("refocus-dropdown")) {
+                setDropdownHidden(false);
+                console.log('clicked again')
+            }
+        };
 
         return () => {
-            categoriesButtonsList.forEach((button) => {
-                button.removeEventListener("click", handleClick);
-           })
-        };
-    }, [dropdownHidden])
+            window.removeEventListener("mousedown", handleClickedAway);
+        }
+    }, [dropdownHidden, pageRerenderedByUser]);
+
+    if(!dropdownHidden) {
+        dropdownIcon?.classList.add("'category'-component_dropdown-btn_icon--flip");
+        menuWrapper?.classList.add("categories-component_menu-wrapper--show");
+    };
+    if(dropdownHidden){
+        dropdownIcon?.classList.remove("category-component_dropdown-btn_icon--flip");
+        menuWrapper?.classList.remove("categories-component_menu-wrapper--show");         
+    }
 
     const categoriesNames: string[] = "backgrounds, fashion, nature, science, education, feelings, health, people, religion, places, animals, industry, computer, food, sports, transportation, travel, buildings, business, music".split(", ");
 
@@ -56,27 +60,31 @@ function Categories({selectedCategory, changeCategory}: MyCategoriesProps): Reac
         category = category.charAt(0).toLocaleUpperCase() + category.slice(1);
         return <li 
             key={category}>
-                {/* <button className="button category_list_title" onClick={ handleCategoryTitleClick}> */}
-                <button className="button category_list_title">
+                <button className="button category-menu_list_title refocus-dropdown">
                     {category}
                 </button>
         </li>
     });
 
     return(
-        <div className="categories-component">
-            <button className="button category-component_dropdown-btn" onClick={handleDropdownToggle}>
-                <div>
-                    <p className="category-component_dropdown-btn_title">{selectedCategory}</p>
-                    <span className="category-component_dropdown-btn_icon">
-                        <img src="src/assets/chevron-down-solid.svg" alt="drop down icon" />
+        <div className="categories-component refocus-dropdown">
+            <button className="button category-component_dropdown-btn refocus-dropdown">
+                <div className="dropdown_title-and-icon-container refocus-dropdown">
+                    <p className="category-component_dropdown-btn_title refocus-dropdown">{selectedCategory}</p>
+                    <span className="category-component_dropdown-btn_icon refocus-dropdown">
+                        <img src="src/assets/chevron-down-solid.svg" alt="drop down icon" className="refocus-dropdown"/>
                     </span>
                 </div>
                 
             </button>
-            <div className="categories-component_menu-wrapper">
-                <div className="categories-component_menu">
-                    <ul>{categoriesList}</ul>
+            <div className="categories-component_menu-wrapper refocus-dropdown">
+                <div className="categories-component_menu refocus-dropdown">
+                    <ul className="refocus-dropdown">
+                        <button className="button category-menu_list_title refocus-dropdown">
+                            All Images
+                        </button>
+                        {categoriesList}
+                    </ul>
                 </div>
             </div>
         </div>
@@ -86,10 +94,11 @@ function Categories({selectedCategory, changeCategory}: MyCategoriesProps): Reac
 
 type MySearcProps = {
     category: MyFilterProps["category"],
-    changeSearchValue: MyFilterProps["changeSearchValue"];
+    changeSearchValue: MyFilterProps["changeSearchValue"],
+    reRenderedByUser: MyFilterProps["reRenderedByUser"],
 };
-function Search({category, changeSearchValue}: MySearcProps): ReactJsxElm {
-    const [pageRerenderedByUser, setPageRerenderedByUser] = useState(false);
+function Search({category, changeSearchValue, reRenderedByUser}: MySearcProps): ReactJsxElm {
+    const pageRerenderedByUser = reRenderedByUser;
     const  [searchBarIsFocused, setSearchBarIsFocused] = useState(false);
     const [clearSearchBtnFocused, setClearSearchBtnFocused] = useState(false);
 
@@ -105,26 +114,6 @@ function Search({category, changeSearchValue}: MySearcProps): ReactJsxElm {
 
     useEffect(() => {
         
-        // I had To use observables, because this useEffect wasn't 
-        // getting triggered by simple event listeners or handlers
-        // when user either reloaded, navigated(forward-backward) the page,...
-
-        const pageRenderedByUserObserver: PerformanceObserver = new PerformanceObserver((list) => {
-    
-            // Chromium, and Brave don't support The "navigation" event, only firefox;
-            if(
-                list.getEntriesByType("paint").length > 0 || 
-                list.getEntriesByType("navigation").length > 0 
-            ) {
-                setSearchBarIsFocused(false);
-                setPageRerenderedByUser(true);
-                setSearchBarIsFocused(false);
-            }
-        });
-    
-        pageRenderedByUserObserver.observe( { entryTypes: ["paint", "navigation"] });
-    
-
         function handleSearchBarFocused(): void {
             setSearchBarIsFocused(true);
         };
@@ -158,9 +147,6 @@ function Search({category, changeSearchValue}: MySearcProps): ReactJsxElm {
 
 
         return () => {
-            pageRenderedByUserObserver.disconnect( );
-            setPageRerenderedByUser(false);
-
             searchBar?.removeEventListener('focus', handleSearchBarFocused);
             searchBar?.removeEventListener("blur", handleSearchBarBlured);
             window.removeEventListener("mousedown", handleMouseDown);
@@ -182,6 +168,7 @@ function Search({category, changeSearchValue}: MySearcProps): ReactJsxElm {
         clearSearchBtn?.classList.remove("hide");
         searchBarIcon?.classList.add("hide");
     };
+
     
     return(
         <div className="search-component">
@@ -197,15 +184,16 @@ type MyFilterProps = {
     category: string,
     changeCategory: Dispatch<string>,
     searchValue: string,
-    changeSearchValue: Dispatch<string>
+    changeSearchValue: Dispatch<string>,
+    reRenderedByUser: boolean,
 }
 
-export default function Filter({category, changeCategory, changeSearchValue}: MyFilterProps): ReactJsxElm {
+export default function Filter({category, changeCategory, changeSearchValue, reRenderedByUser}: MyFilterProps): ReactJsxElm {
     
     return (
         <div className="filter">
-            <Categories selectedCategory={category} changeCategory={changeCategory}/>
-            <Search category={category} changeSearchValue={changeSearchValue}/>
+            <Categories selectedCategory={category} changeCategory={changeCategory} pageRerenderedByUser={reRenderedByUser}/>
+            <Search category={category} changeSearchValue={changeSearchValue} reRenderedByUser={reRenderedByUser}/>
         </div>
     )
 }

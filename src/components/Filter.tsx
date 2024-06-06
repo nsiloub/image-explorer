@@ -196,15 +196,17 @@ function Search({category, changeSearchValue, reRenderedByUser}: MySearcProps): 
     function handleUserKeyUped(e: Event): void {
         const target = e.target as HTMLInputElement
 
-        const delay = 2000;
+        const delay = 1500;
 
-        let sendTextTimeout = 0;
-        clearTimeout(sendTextTimeout);
+        let sendTextTimeout: number | undefined = undefined;
 
-        sendTextTimeout = setTimeout(() => {
+        if (sendTextTimeout) {
+            clearTimeout(sendTextTimeout);
+        }
+
+        sendTextTimeout = window.setTimeout(() => {
             changeSearchValue(target.value);
-        }, delay)
-
+        }, delay);
 
 
 
@@ -236,6 +238,7 @@ export default function Filter({category, changeCategory, changeSearchValue, reR
         <div className="filter">
             <Categories selectedCategory={category} changeCategory={changeCategory} pageRerenderedByUser={reRenderedByUser}/>
             <Search category={category} changeSearchValue={changeSearchValue} reRenderedByUser={reRenderedByUser}/>
+            <div className="filter_sameness-illusion"></div>
         </div>
     )
 }

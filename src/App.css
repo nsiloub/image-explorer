@@ -1,17 +1,8 @@
+/* Global styles for this component */
 ul, ol, li {
   list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-header, main {
-  background-color: #7B43D6;
-}
-
-.button {
-  border-radius: 0.9rem;
-  border: none;
-  background-color:white;
+  /* margin: 0;
+  padding: 0; */
 }
 
 input:focus,
@@ -20,6 +11,73 @@ button:focus
   outline: none;
 }
 
+.button {
+  border-radius: 0.9rem;
+  border: none;
+  background-color:white;
+}
+
+img {
+  max-width: 100%;
+}
+
 .hide {
   visibility: hidden;
+}
+/* Global styles for this component ENDS*/
+
+
+/* Styles for the Filterable Galery Component */
+.filterable-gallery {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #7B43D6;
+
+  overflow-y: scroll;
+  padding: 2%;
+
+  /* padding-bottom: 8%; */
+
+
+}
+
+/* Styles for the Filterable Galery Component Ends*/
+
+
+
+
+/* Styles for the header Part*/
+header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.appTitle {
+  color: #fff;
+}
+
+/* Styles for the header Part Ends */
+
+
+/* Styles for the Main part */
+main {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+}
+
+.results-msg-container_msg {
+  color: #fff;
+}
+
+/* Styles for the Main part ENDS*/
+
+
+.card-list {
 }

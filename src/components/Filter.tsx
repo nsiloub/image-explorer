@@ -14,7 +14,6 @@ function Categories({selectedCategory, changeCategory, pageRerenderedByUser}: My
     
     const [dropdownHidden, setDropdownHidden] = useState(true);
     const [focusCounter, setFocusCounter] = useState(0);
-    const [reFocusCounter, setReFocusCounter] = useState(0);
 
     const dropdownIcon =  document.querySelector<HTMLSpanElement>(".category-component_dropdown-btn_icon");
     const menuWrapper = document.querySelector<HTMLDivElement>(".categories-component_menu-wrapper");

@@ -5,6 +5,7 @@ import Footer from "./components/Footer";
 import CardsList from "./components/CardsList";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import Pagination from "./components/Pagination";
 
 type ReactJsxElm = React.JSX.Element;
 
@@ -114,6 +115,7 @@ function FilterableGallery(): ReactJsxElm {
         <ResultsMsg searchTerm={searchValue} numberOfRuslts={7} selectedCategory={category}/>
         <CardsList setClickedPhotId={setClickedPhotId}/>
         {/* <button className="load-more">Load More</button> */}
+        <Pagination />
       </main>
       <Footer />
     

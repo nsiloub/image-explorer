@@ -64,14 +64,12 @@ type MyCardsListProps = {
     setClickedPhotId: Dispatch<string>,
 }
 export default function CardsList({setClickedPhotId}: MyCardsListProps): ReactJsxElm {
-    const ArrOfCards: ReactJsxElm[] = []
-    ArrOfCards.push(
-        <li className="card"><ImageCard setClickedPhotId={setClickedPhotId}/></li>,
-        <li className="card"><ImageCard setClickedPhotId={setClickedPhotId}/></li>,
-        <li className="card"><ImageCard setClickedPhotId={setClickedPhotId}/></li>,
-        <li className="card"><ImageCard setClickedPhotId={setClickedPhotId}/></li>,
-        <li className="card"><ImageCard setClickedPhotId={setClickedPhotId}/></li>,
-    )
+    const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
+    const ArrOfCards: ReactJsxElm[] = cards.map((card) => {
+        return <li key={card} className="card"><ImageCard setClickedPhotId={setClickedPhotId}/></li>
+    });
+
+
     return (
         <ol className="card-list">
             {ArrOfCards}

@@ -1,0 +1,20 @@
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+button {
+    background-color: transparent;
+    border: none;
+}
+
+.pagination_numbers {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+.pagination_numbers_btn {
+    color: #fff;
+}
+

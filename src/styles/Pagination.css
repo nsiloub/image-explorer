@@ -18,3 +18,7 @@ button {
     color: #fff;
 }
 
+.pagination_left, .pagination_right {
+    width: 2rem;
+}
+

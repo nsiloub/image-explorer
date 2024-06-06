@@ -1,23 +1,22 @@
 .card-list {
     width: 100%;
+    max-width: 100%;
     display: grid;
     justify-items: center;
 
     grid-template-columns: repeat(auto-fit, minmax(calc(200px + 3vw), 1fr));
-    gap: 3%;
+    /* gap: 3%; */
 }
 
 .card {
-    /* width: 18%; */
-    /* width: calc(200px + 3vw); */
     background-color: #05000D;
     display: grid;
-    /* flex-direction: column;
-    align-items: center; */
     justify-items: center;
     justify-content: center;
 
     border-radius: 0.9rem;
+
+    margin: 5%;
 }
 .card_data {
     width: 100%;

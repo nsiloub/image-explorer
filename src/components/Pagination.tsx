@@ -13,7 +13,7 @@ export default function Pagination(): ReactJsxElm {
     })
     return (
         <div className="pagination">
-            <button className="pagination_left-container">
+            <button className="pagination_left">
                 <img src="src/assets/chevron-left-solid.svg" alt="" />
             </button>
             <ul className="pagination_numbers">

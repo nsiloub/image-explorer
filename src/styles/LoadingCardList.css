@@ -1,0 +1,77 @@
+.loading-card-list {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(calc(200px + 3vw), 1fr));
+    grid-template-rows: calc(250px + 3vw);
+}
+
+._loading-card {
+    background-color: #452578;
+    display: grid;
+    
+    border-radius: 0.9rem;
+    margin: 5%;
+    
+    /*! Height approx 55% of the card height, and 45%*! */
+    grid-template-rows: calc(137.5px + 1.65vw) calc(112.5px + 1.35vw);
+}
+
+.loading-card_photo {
+    background-color: #6A4C9B;
+    border-radius: 0.9rem;
+}
+
+.line {
+    background-color: #C1C1C1;
+    border-radius: 0.9rem;
+}
+.circle {
+    background-color: #6A4C9B;
+    border-radius: 0.9rem;
+}
+
+.loading-card_infos {
+    width: 100%; 
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+    justify-content: space-around;  
+}
+
+.loading-card_infos_tags {
+    width: 60%;
+    height: 10%;
+}
+
+.loading-card_infos_about {
+    width: 55%;
+    height: 8%;
+}
+
+.loading-card_stats {
+    width: 100%;
+    height: 35%;
+    
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+
+.loading-cardstats {
+    width: 20%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+}
+
+._cardstats_icon {
+    width: 50%;
+    height: 50%;
+}
+._cardstats_text {
+    width: 100%;
+    height: 20%;
+}

@@ -3,6 +3,7 @@ import "../styles/Pagination.css"
 type ReactJsxElm = React.JSX.Element;
 
 export default function Pagination(): ReactJsxElm {
+    
     const numbers = [1, 2, 3, 4, 5, 6, 7];
     const pageNumbersBtnList: ReactJsxElm[] = numbers.map((number) => {       
         return <li key={number}>
@@ -10,17 +11,17 @@ export default function Pagination(): ReactJsxElm {
                 {number}
             </button>
         </li>
-    })
+    });
     return (
         <div className="pagination">
             <button className="pagination_left">
-                <img src="src/assets/chevron-left-solid.svg" alt="" />
+                <p className="pagination_arrows">{"«"}</p>
             </button>
             <ul className="pagination_numbers">
                 {pageNumbersBtnList}
             </ul>
             <button className="pagination_right">
-                <img src="src/assets/chevron-left-solid.svg" alt="" style={{transform: "rotate(180deg)"}}/>
+                <p className="pagination_arrows">{"»"}</p>
             </button>
         </div>
     )

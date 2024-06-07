@@ -1,11 +1,17 @@
 .pagination {
+    width: 30%;
     display: flex;
     justify-content: center;
     align-items: center;
 }
-button {
+.pagination * {
+    color: #fff;
+}
+.pagination button {
     background-color: transparent;
     border: none;
+    /* font-size: 1.5rem; */
+    padding: 0%;
 }
 
 .pagination_numbers {
@@ -14,11 +20,14 @@ button {
     justify-content: space-around;
     align-items: center;
 }
-.pagination_numbers_btn {
-    color: #fff;
-}
+/* .pagination_numbers_btn {
+} */
 
 .pagination_left, .pagination_right {
     width: 2rem;
+}
+
+.pagination_arrows {
+    font-size: 2rem;
 }
 

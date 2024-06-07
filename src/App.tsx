@@ -2,7 +2,7 @@ import Filter from "./components/Filter";
 import "./App.css";
 import FocusedImage from "./components/FocusedImage";
 import Footer from "./components/Footer";
-import CardsList from "./components/CardsList";
+import CardList from "./components/CardList";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Pagination from "./components/Pagination";
@@ -46,6 +46,9 @@ function FilterableGallery(): ReactJsxElm {
   const [pageNumber, setPageNumber] = useState(1);
   const [resultsPerPage, setResultsPerPage] = useState(20);
   const [clickedPhotId, setClickedPhotId] = useState("");
+  
+  
+  
   useEffect(() => {
 
     // I had To use observables, because some useEffect weren't 
@@ -113,8 +116,7 @@ function FilterableGallery(): ReactJsxElm {
       </header>
       <main>
         <ResultsMsg searchTerm={searchValue} numberOfRuslts={7} selectedCategory={category}/>
-        <CardsList setClickedPhotId={setClickedPhotId}/>
-        {/* <button className="load-more">Load More</button> */}
+        <CardList setClickedPhotId={setClickedPhotId}/>
         <Pagination />
       </main>
       <Footer />

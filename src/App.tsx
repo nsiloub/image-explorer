@@ -140,13 +140,11 @@ function FilterableGallery(): ReactJsxElm {
 
 
     if(dataIsLoading) {
-      console.log("Display Loading");
       mainContentToDisplay = <>
         <LoadingCardList />    
       </>
     };
     if(!dataIsLoading && dataResult.arrOfResults?.length > 0) {
-      console.log("not loading, return : display Resultmsg, cardList and Pagination")
       mainContentToDisplay = <>
         <ResultsMsg searchTerm={searchValue} numberOfRuslts={7} selectedCategory={category}/>
         <CardList setClickedPhotId={setClickedPhotId} data={dataResult.arrOfResults}/>
@@ -154,7 +152,6 @@ function FilterableGallery(): ReactJsxElm {
       </>
     };
     if(!dataIsLoading && dataResult.arrOfResults?.length === 0) {
-      console.log("not loading, no results");
       mainContentToDisplay = <>
         <ResultsMsg searchTerm={searchValue} numberOfRuslts={0} selectedCategory={category}/>
       </>

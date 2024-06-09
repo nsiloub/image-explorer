@@ -3,7 +3,7 @@ import "./App.css";
 import FocusedImage from "./components/FocusedImage";
 import Footer from "./components/Footer";
 import CardList from "./components/CardList";
-import { useEffect, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import axios from "axios";
 import Pagination from "./components/Pagination";
 import LoadingCardList from "./components/LoadingCardList";
@@ -42,14 +42,31 @@ function FilterableGallery(): ReactJsxElm {
   const [searchValue, setSearchValue] = useState<string>("");
   const [pageRerenderedByUser, setPageRerenderedByUser] = useState(false);
 
-
-
   const [pageNumber, setPageNumber] = useState(1);
   const [resultsPerPage, setResultsPerPage] = useState(20);
   const [clickedPhotId, setClickedPhotId] = useState("");
   
-  
-  
+  const [dataIsLoading, setDataIsLoading]   = useState(true);
+  const [dataResult, setDataResult] = useState<DataResult>({
+    totalAccessibleImages: 0,
+    totalImageFound: 0,
+    arrOfResults: []
+  });
+
+  type DataResult = {
+    totalImageFound: number,
+    totalAccessibleImages: number,
+    arrOfResults: {
+      comments: number,
+      downloads: number,
+      id: number,
+      likes: number,
+      views: number,
+      webformatURL: string,
+      user: string
+    }[]
+  }
+
   useEffect(() => {
 
     // I had To use observables, because some useEffect weren't 
@@ -103,10 +120,48 @@ function FilterableGallery(): ReactJsxElm {
       const data = (await axios.get(myurl)).data;
       
       console.log(data);
+
+      setDataResult({
+        totalImageFound: data.total,
+        totalAccessibleImages: data.totalHits,
+        arrOfResults: data.hits
+      })
+      // setDataResult();
+      data ? setDataIsLoading(false) : setDataIsLoading(true);
     } catch(e) {
       throw(e)
     }
   };
+
+  
+
+  function displayContentOrLoadings(): ReactNode {
+    let mainContentToDisplay: ReactJsxElm = <></>;
+
+
+    if(dataIsLoading) {
+      console.log("Display Loading");
+      mainContentToDisplay = <>
+        <LoadingCardList />    
+      </>
+    };
+    if(!dataIsLoading && dataResult.arrOfResults?.length > 0) {
+      console.log("not loading, return : display Resultmsg, cardList and Pagination")
+      mainContentToDisplay = <>
+        <ResultsMsg searchTerm={searchValue} numberOfRuslts={7} selectedCategory={category}/>
+        <CardList setClickedPhotId={setClickedPhotId}/>
+        <Pagination />
+      </>
+    };
+    if(!dataIsLoading && dataResult.arrOfResults?.length === 0) {
+      console.log("not loading, no results");
+      mainContentToDisplay = <>
+        <ResultsMsg searchTerm={searchValue} numberOfRuslts={0} selectedCategory={category}/>
+      </>
+    }
+
+    return mainContentToDisplay;
+  }
 
   return (
     <div className="filterable-gallery">
@@ -116,10 +171,7 @@ function FilterableGallery(): ReactJsxElm {
         <Filter category={category} changeCategory={setCategory} searchValue={searchValue} changeSearchValue={setSearchValue} reRenderedByUser={pageRerenderedByUser}/>
       </header>
       <main>
-        <ResultsMsg searchTerm={searchValue} numberOfRuslts={7} selectedCategory={category}/>
-        <CardList setClickedPhotId={setClickedPhotId}/>
-        <Pagination />
-        <LoadingCardList />
+        {displayContentOrLoadings()}
       </main>
       <Footer />
     

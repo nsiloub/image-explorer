@@ -36,6 +36,20 @@ function ResultsMsg({numberOfRuslts, searchTerm, selectedCategory}: MyResultsMsg
   )
 };
 
+export type DataResult = {
+  totalImageFound: number,
+  totalAccessibleImages: number,
+  arrOfResults: {
+    comments: number,
+    downloads: number,
+    id: string,
+    likes: number,
+    views: number,
+    tags: string,
+    webformatURL: string,
+    user: string
+  }[]
+}
 
 function FilterableGallery(): ReactJsxElm {
   const [category, setCategory] = useState<string>("Categories")
@@ -52,20 +66,6 @@ function FilterableGallery(): ReactJsxElm {
     totalImageFound: 0,
     arrOfResults: []
   });
-
-  type DataResult = {
-    totalImageFound: number,
-    totalAccessibleImages: number,
-    arrOfResults: {
-      comments: number,
-      downloads: number,
-      id: number,
-      likes: number,
-      views: number,
-      webformatURL: string,
-      user: string
-    }[]
-  }
 
   useEffect(() => {
 
@@ -149,7 +149,7 @@ function FilterableGallery(): ReactJsxElm {
       console.log("not loading, return : display Resultmsg, cardList and Pagination")
       mainContentToDisplay = <>
         <ResultsMsg searchTerm={searchValue} numberOfRuslts={7} selectedCategory={category}/>
-        <CardList setClickedPhotId={setClickedPhotId}/>
+        <CardList setClickedPhotId={setClickedPhotId} data={dataResult.arrOfResults}/>
         <Pagination />
       </>
     };

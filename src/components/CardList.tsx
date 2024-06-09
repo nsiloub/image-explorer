@@ -1,78 +1,63 @@
 import { Dispatch } from "react";
 import "../styles/CardList.css"
+import { DataResult } from "../App";
 
 
 type ReactJsxElm =  React.JSX.Element;
 
-type MyImageCardProps = {
-    setClickedPhotId: MyCardsListProps["setClickedPhotId"];
-}
-function ImageCard({setClickedPhotId}: MyImageCardProps): ReactJsxElm {
-    const uploader = "UPLOADER";
-    const tags = "#tag1 #tag2 #tag3";
-    const uploadedBy = `Uploaded by ${uploader}`;
-    const views = 6546;
-    const likes = 456;
-    const comments = 834;
-    const downloads = 943;
-    const imageId = "image123"
 
-    function handlePhotoClick(e: React.MouseEvent<HTMLButtonElement, MouseEvent>): void {
-        const target = e.target as HTMLButtonElement
-        setClickedPhotId(target.id);
-        console.log("image clicked: ", target.id)
-    };
-    return(
-        <>
+type MyCardsListProps = {
+    setClickedPhotId: Dispatch<string>,
+    data: DataResult["arrOfResults"];
+}
+export default function CardList({setClickedPhotId, data}: MyCardsListProps): ReactJsxElm {
+    const arrayOfCards: ReactJsxElm[] = data.map((card) => {
+
+        function handlePhotoClick(e: React.MouseEvent<HTMLButtonElement, MouseEvent>): void {
+            const target = e.target as HTMLButtonElement
+            setClickedPhotId(target.id);
+            console.log("image clicked: ", target.id)
+        };    
+
+        return <li key={card.id} className="card">
             <div className="card_clickAnim">
                 <div className="card_clickAnim_screen"></div>
                 <div className="card_clickAnim_cursor"></div>
             </div>
-            <button className="card_photo card_data" id={imageId} onClick={handlePhotoClick} >
-                <img src="src/assets/wp2665214.jpg" alt="" />
+            <button className="card_photo card_data" id={card.id} onClick={handlePhotoClick} >
+                <img src={card.webformatURL} alt="" />
             </button>
             <div className="card_tags card_data">
-                <p>{tags}</p>
+                <p>{card.tags}</p>
             </div>
             <div className="card_about card_data">
-                <p>{uploadedBy}</p>
+                <p>Photo By: {card.user}</p>
             </div>
             <div className="card_stats">
                 <span className="cardstats_views cardstats">
                     <img  src="src/assets/eye-solid 2.svg" alt="views Icon" className="cardstats_views_icon"/>
-                    <p>{views}</p>
+                    <p>{card.views}</p>
                 </span>
                 <span className="cardstats_likes cardstats">
                     <img src="src/assets/thumbs-up-solid 2.svg" alt="Likes icon" className="cardstats_views_likes"/>
-                    <p>{likes}</p>
+                    <p>{card.likes}</p>
                 </span>
                 <span className="cardstats_comments cardstats">
                     <img src="src/assets/comment-solid 2.svg" alt="Comments icon" className="cardstats_views_comments"/>
-                    <p>{comments}</p> 
+                    <p>{card.comments}</p> 
                 </span>
                 <span className="cardstats_downloads cardstats">
                     <img src="src/assets/download-solid 2.svg" alt="Comments icon" className="cardstats_views_downloads"/>
-                    <p>{downloads}</p>  
+                    <p>{card.downloads}</p>  
                 </span>
             </div>
-        </>
-    )
-};
-
-type MyCardsListProps = {
-    // data: [],
-    setClickedPhotId: Dispatch<string>,
-}
-export default function CardList({setClickedPhotId}: MyCardsListProps): ReactJsxElm {
-    const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
-    const ArrOfCards: ReactJsxElm[] = cards.map((card) => {
-        return <li key={card} className="card"><ImageCard setClickedPhotId={setClickedPhotId}/></li>
-    });
+        </li>
+    })
 
 
     return (
         <ol className="card-list">
-            {ArrOfCards}
+            {arrayOfCards}
         </ol>
     )
 };

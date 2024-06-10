@@ -67,9 +67,6 @@ function FilterableGallery(): ReactJsxElm {
     arrOfResults: []
   });
 
-  const [maximumIsReached, setMaximumIsReached] = useState(false);
-  const [minimumIsReached, setMinimumIsReached] = useState(false);
-  const numberOfPages = Math.round(dataResult.totalAccessibleImages / resultsPerPage);
 
   useEffect(() => {
 
@@ -152,7 +149,7 @@ function FilterableGallery(): ReactJsxElm {
       mainContentToDisplay = <>
         <ResultsMsg searchTerm={searchValue} numberOfRuslts={7} selectedCategory={category}/>
         <CardList setClickedPhotId={setClickedPhotId} data={dataResult.arrOfResults}/>
-        <Pagination maximumIsReached={maximumIsReached} minimumIsReached={minimumIsReached} numberOfPages={numberOfPages} setCurrentPage={setPageNumberToDisplay} currentPage={pageNumberToDisplay}/>
+        <Pagination  dataResult={dataResult} resultsPerPage={resultsPerPage} setCurrentPage={setPageNumberToDisplay} currentPage={pageNumberToDisplay}/>
       </>
     };
     if(!dataIsLoading && dataResult.arrOfResults?.length === 0) {

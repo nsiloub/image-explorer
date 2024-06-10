@@ -56,7 +56,7 @@ function FilterableGallery(): ReactJsxElm {
   const [searchValue, setSearchValue] = useState<string>("");
   const [pageRerenderedByUser, setPageRerenderedByUser] = useState(false);
 
-  const [pageNumber, setPageNumber] = useState(1);
+  const [pageNumberToDisplay, setPageNumberToDisplay] = useState(1);
   const [resultsPerPage, setResultsPerPage] = useState(20);
   const [clickedPhotId, setClickedPhotId] = useState("");
   
@@ -66,6 +66,10 @@ function FilterableGallery(): ReactJsxElm {
     totalImageFound: 0,
     arrOfResults: []
   });
+
+  const [maximumIsReached, setMaximumIsReached] = useState(false);
+  const [minimumIsReached, setMinimumIsReached] = useState(false);
+  const numberOfPages = Math.round(dataResult.totalAccessibleImages / resultsPerPage);
 
   useEffect(() => {
 
@@ -103,7 +107,7 @@ function FilterableGallery(): ReactJsxElm {
   }
   const url = `https://pixabay.com/api/?key=${
     pixabayAPIKey}${categoryToSend
-    }&q=${encodeURI(searchValue)}&page=${pageNumber
+    }&q=${encodeURI(searchValue)}&page=${pageNumberToDisplay
     }&per_page=${resultsPerPage}`;
   
 
@@ -148,7 +152,7 @@ function FilterableGallery(): ReactJsxElm {
       mainContentToDisplay = <>
         <ResultsMsg searchTerm={searchValue} numberOfRuslts={7} selectedCategory={category}/>
         <CardList setClickedPhotId={setClickedPhotId} data={dataResult.arrOfResults}/>
-        <Pagination />
+        <Pagination maximumIsReached={maximumIsReached} minimumIsReached={minimumIsReached} numberOfPages={numberOfPages} setCurrentPage={setPageNumberToDisplay} currentPage={pageNumberToDisplay}/>
       </>
     };
     if(!dataIsLoading && dataResult.arrOfResults?.length === 0) {

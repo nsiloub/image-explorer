@@ -1,11 +1,25 @@
+import { Dispatch } from "react";
 import "../styles/Pagination.css"
 
 type ReactJsxElm = React.JSX.Element;
 
-export default function Pagination(): ReactJsxElm {
+type MyPaginationProps = {
+    numberOfPages: number,
+    currentPage: number,
+    minimumIsReached: boolean,
+    maximumIsReached: boolean,
+    setCurrentPage: Dispatch<number>
+}
+export default function Pagination({numberOfPages, setCurrentPage, currentPage, maximumIsReached, minimumIsReached}: MyPaginationProps): ReactJsxElm {
     
-    const numbers = [1, 2, 3, 4, 5, 6, 7];
-    const pageNumbersBtnList: ReactJsxElm[] = numbers.map((number) => {       
+    numberOfPages === 0 && (numberOfPages = 1); // to have atleast 1 page instead of 0 page;
+    const numbersArr: number[] = [];
+    for(let i=1; i <= numberOfPages; i++) {
+        numbersArr.push(i);
+    }
+    console.log(numbersArr);
+
+    const pageNumbersBtnList: ReactJsxElm[] = numbersArr.map((number) => {       
         return <li key={number}>
             <button className="pagination_numbers_btn">
                 {number}

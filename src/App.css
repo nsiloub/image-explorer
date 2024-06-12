@@ -22,6 +22,9 @@ img {
 .hide {
   visibility: hidden;
 }
+.collapse {
+  visibility: collapse;
+}
 /* Global styles for this component ENDS*/
 
 

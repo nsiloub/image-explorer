@@ -149,7 +149,7 @@ function FilterableGallery(): ReactJsxElm {
       mainContentToDisplay = <>
         <ResultsMsg searchTerm={searchValue} numberOfRuslts={7} selectedCategory={category}/>
         <CardList setClickedPhotId={setClickedPhotId} data={dataResult.arrOfResults}/>
-        <Pagination  dataResult={dataResult} resultsPerPage={resultsPerPage} setCurrentPage={setPageNumberToDisplay} currentPage={pageNumberToDisplay}/>
+        <Pagination  dataResult={dataResult} resultsPerPage={resultsPerPage} setCurrentPage={setPageNumberToDisplay} currentPage={pageNumberToDisplay} pageReRenderedByUser={pageRerenderedByUser} />
       </>
     };
     if(!dataIsLoading && dataResult.arrOfResults?.length === 0) {

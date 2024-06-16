@@ -7,10 +7,9 @@ type ReactJsxElm = React.JSX.Element;
 type MyCategoriesProps = {
     selectedCategory: MyFilterProps["category"],
     changeCategory: MyFilterProps['changeCategory']
-    pageRerenderedByUser: MyFilterProps["reRenderedByUser"];
 }
 
-function Categories({selectedCategory, changeCategory, pageRerenderedByUser}: MyCategoriesProps): ReactJsxElm {
+function Categories({selectedCategory, changeCategory}: MyCategoriesProps): ReactJsxElm {
     
     const [dropdownHidden, setDropdownHidden] = useState(true);
     const [focusCounter, setFocusCounter] = useState(0);
@@ -59,7 +58,7 @@ function Categories({selectedCategory, changeCategory, pageRerenderedByUser}: My
             window.removeEventListener("mousedown", handleClickedAway);
             dropDownBtn?.removeEventListener("focus", handleDropDownFocus);
         }
-    }, [dropdownHidden, pageRerenderedByUser, focusCounter]);
+    }, [dropdownHidden, focusCounter, dropDownBtn, changeCategory]);
    
 
     switch(dropdownHidden) {
@@ -114,16 +113,14 @@ function Categories({selectedCategory, changeCategory, pageRerenderedByUser}: My
 type MySearcProps = {
     category: MyFilterProps["category"],
     changeSearchValue: MyFilterProps["changeSearchValue"],
-    reRenderedByUser: MyFilterProps["reRenderedByUser"],
 };
-function Search({category, changeSearchValue, reRenderedByUser}: MySearcProps): ReactJsxElm {
-    const pageRerenderedByUser = reRenderedByUser;
+function Search({category, changeSearchValue, }: MySearcProps): ReactJsxElm {
     const  [searchBarIsFocused, setSearchBarIsFocused] = useState(false);
     const [clearSearchBtnFocused, setClearSearchBtnFocused] = useState(false);
 
 
 
-    let description: string = `Search for ${category} images`;
+    const description: string = `Search for ${category} images`;
     const searchBar = document.querySelector<HTMLInputElement>("#searchbar")
     const clearSearchBtn = document.querySelector<HTMLButtonElement>(".search-component_X-btn");
     const searchBarIcon = document.querySelector<HTMLImageElement>(".search-component_search-icon")
@@ -174,7 +171,7 @@ function Search({category, changeSearchValue, reRenderedByUser}: MySearcProps): 
 
 
         }
-    }, [pageRerenderedByUser, searchBarIsFocused, clearSearchBtnFocused] );
+    }, [searchBarIsFocused, clearSearchBtnFocused, searchBar, clearSearchBtn, changeSearchValue] );
 
     // Hiding Or Showing search icon and clear button accordingly
     if(!searchBarIsFocused) {
@@ -228,15 +225,14 @@ type MyFilterProps = {
     changeCategory: Dispatch<string>,
     searchValue: string,
     changeSearchValue: Dispatch<string>,
-    reRenderedByUser: boolean,
 }
 
-export default function Filter({category, changeCategory, changeSearchValue, reRenderedByUser}: MyFilterProps): ReactJsxElm {
+export default function Filter({category, changeCategory, changeSearchValue}: MyFilterProps): ReactJsxElm {
     
     return (
         <div className="filter">
-            <Categories selectedCategory={category} changeCategory={changeCategory} pageRerenderedByUser={reRenderedByUser}/>
-            <Search category={category} changeSearchValue={changeSearchValue} reRenderedByUser={reRenderedByUser}/>
+            <Categories selectedCategory={category} changeCategory={changeCategory} />
+            <Search category={category} changeSearchValue={changeSearchValue}/>
             <div className="filter_sameness-illusion"></div>
         </div>
     )

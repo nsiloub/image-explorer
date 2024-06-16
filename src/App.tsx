@@ -54,7 +54,6 @@ export type DataResult = {
 function FilterableGallery(): ReactJsxElm {
   const [category, setCategory] = useState<string>("Categories")
   const [searchValue, setSearchValue] = useState<string>("");
-  const [pageRerenderedByUser, setPageRerenderedByUser] = useState(false);
 
   const [pageNumberToDisplay, setPageNumberToDisplay] = useState(1);
   const [resultsPerPage, setResultsPerPage] = useState(20);
@@ -68,31 +67,6 @@ function FilterableGallery(): ReactJsxElm {
   });
 
 
-  useEffect(() => {
-
-    // I had To use observables, because some useEffect weren't 
-    // getting triggered by simple event listeners or handlers
-    // when user either reloaded, navigated(forward-backward) the page,...
-
-    const pageRenderedByUser_Observer: PerformanceObserver = new PerformanceObserver((list) => {
-    
-      // Chromium, and Brave don't support The "navigation" event, only firefox;
-      if(
-          list.getEntriesByType("paint").length > 0 || 
-          list.getEntriesByType("navigation").length > 0 
-      ) {
-          setPageRerenderedByUser(true);
-      }
-    });
-    pageRenderedByUser_Observer.observe( { entryTypes: ["paint", "navigation"] });
-  
-    return () => {
-      pageRenderedByUser_Observer.disconnect( );
-      
-      setPageRerenderedByUser(false);
-    }
-  })
-
 
   const pixabayAPIKey = import.meta.env.VITE_PIXABAY_API_KEYS
   
@@ -100,19 +74,24 @@ function FilterableGallery(): ReactJsxElm {
   if(category === "Categories" || category === "All Images") {
     categoryToSend = ""
   } else {
-    categoryToSend = `&category=${category}`
+    categoryToSend = `&category=${category.toLowerCase()}`
   }
   const url = `https://pixabay.com/api/?key=${
     pixabayAPIKey}${categoryToSend
     }&q=${encodeURI(searchValue)}&page=${pageNumberToDisplay
     }&per_page=${resultsPerPage}`;
   
-
   useEffect(() => {
     fetchData(url);
 
     return () => {
+      setDataResult({
+        totalAccessibleImages: 0,
+        totalImageFound: 0,
+        arrOfResults: []
+      }); 
 
+      setDataIsLoading(true);
     }
   }, [url])
   
@@ -120,17 +99,15 @@ function FilterableGallery(): ReactJsxElm {
     try {
       const data = (await axios.get(myurl)).data;
       
-      console.log(data);
-
       setDataResult({
         totalImageFound: data.total,
         totalAccessibleImages: data.totalHits,
         arrOfResults: data.hits
       })
-      // setDataResult();
-      data ? setDataIsLoading(false) : setDataIsLoading(true);
+      // data ? setDataIsLoading(false) : setDataIsLoading(true);
+      data && setDataIsLoading(false);
     } catch(e) {
-      throw(e)
+      console.log("Error while fetching data: ", e);
     }
   };
 
@@ -149,7 +126,7 @@ function FilterableGallery(): ReactJsxElm {
       mainContentToDisplay = <>
         <ResultsMsg searchTerm={searchValue} numberOfRuslts={7} selectedCategory={category}/>
         <CardList setClickedPhotId={setClickedPhotId} data={dataResult.arrOfResults}/>
-        <Pagination  dataResult={dataResult} resultsPerPage={resultsPerPage} setCurrentPage={setPageNumberToDisplay} currentPage={pageNumberToDisplay} pageReRenderedByUser={pageRerenderedByUser} />
+        <Pagination  dataResult={dataResult} resultsPerPage={resultsPerPage} setCurrentPage={setPageNumberToDisplay} currentPage={pageNumberToDisplay} />
       </>
     };
     if(!dataIsLoading && dataResult.arrOfResults?.length === 0) {
@@ -166,7 +143,7 @@ function FilterableGallery(): ReactJsxElm {
       <FocusedImage />
       <header className="logo-and-filter">
         <TitleOrLogo />
-        <Filter category={category} changeCategory={setCategory} searchValue={searchValue} changeSearchValue={setSearchValue} reRenderedByUser={pageRerenderedByUser}/>
+        <Filter category={category} changeCategory={setCategory} searchValue={searchValue} changeSearchValue={setSearchValue}/>
       </header>
       <main>
         {displayContentOrLoadings()}

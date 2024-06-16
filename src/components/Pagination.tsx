@@ -54,6 +54,14 @@ export default function Pagination({ dataResult, setCurrentPage, currentPage, re
             setStaticPagesNumbersArr([1, 2, {separator: "...", key: "sep1"}, numberOfPages]);
         }
 
+        if(numberOfPages <= 3) {
+            const arr = []
+            for(let i=1; i <= numberOfPages; i++) {
+                arr.push(i)
+            };
+            setStaticPagesNumbersArr(arr)
+        }
+
 
 
         

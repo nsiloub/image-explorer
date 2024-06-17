@@ -1,0 +1,67 @@
+:root {
+    --elm-radius: 5%   
+}
+
+.overlay-container {
+    width: 100%;
+    background-color: rgb(10, 1, 24, 0.9);
+    /* opacity: 0.8; */
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.focused-img {
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+
+    padding-top: 0;
+    padding-bottom: 0;
+    padding-right: 0;
+    background-color: #05000D;
+    border-radius: var(--elm-radius);
+
+}
+
+.focused-img_children {
+    margin-right: 10%;
+    margin-left: 10%;
+}
+
+.focused-img_photo > img {
+    border-color: #9452FF;
+    border-radius: var(--elm-radius);
+    border-style: solid;
+    border-width: 0.3rem;
+}
+
+
+.focused-img_collapse-btn {
+    color: #fff;
+    align-self: flex-end;
+    
+    width: 5%;
+}
+
+.focused-img_like-btn {
+    align-self: flex-end;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.focused-img_like-btn > p {
+    color: #9452FF;
+}
+
+.focused-img_msg {
+    color: #fff;
+}

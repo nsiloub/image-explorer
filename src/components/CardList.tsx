@@ -16,7 +16,7 @@ export default function CardList({setClickedPhotId, data}: MyCardsListProps): Re
         function handlePhotoClick(e: React.MouseEvent<HTMLButtonElement, MouseEvent>): void {
             const target = e.target as HTMLButtonElement
             setClickedPhotId(target.id);
-            console.log("image clicked: ", target.id)
+            console.log("image clicked: ", target.id);
         };    
 
         return <li key={card.id} className="card">
@@ -24,8 +24,8 @@ export default function CardList({setClickedPhotId, data}: MyCardsListProps): Re
                 <div className="card_clickAnim_screen"></div>
                 <div className="card_clickAnim_cursor"></div>
             </div>
-            <button className="card_photo card_data" id={card.id} onClick={handlePhotoClick} >
-                <img src={card.webformatURL} alt="" />
+            <button className="card_photo card_data"  onClick={handlePhotoClick} >
+                <img src={card.webformatURL} alt="" id={card.id}/>
             </button>
             <div className="card_tags card_data">
                 <p>{card.tags}</p>

@@ -1,19 +1,31 @@
+import { Dispatch, useState } from "react";
 import "../styles/FocusedImage.css"
 
-type ReactJsxElm = React.JSX.Element;
+import { DataResult } from "../App";
 
-export default function FocusedImage(): ReactJsxElm {
-    const clickedPhoto = "src/assets/wp2665214.jpg";
-    
+type ReactJsxElm = React.JSX.Element;
+type MyFocusedImageProps = {
+    imageIsFocused: boolean,
+    setImageIsFocused: Dispatch<boolean>,
+
+    clickedPhoto: {imgUrl: string, likes: number},
+}
+export default function FocusedImage({imageIsFocused, setImageIsFocused, clickedPhoto}: MyFocusedImageProps): ReactJsxElm {
+
+    function handleCollapseBtnClick():void {
+        setImageIsFocused(false);
+    };
+    const overlayCollapseClassList = imageIsFocused ? "" : "collapse"
+
     return(
-        <div className="overlay-container">
+        <div className={`overlay-container ${overlayCollapseClassList}`}>
             <div className="focused-img">
-                <div className="focused-img_collapse-btn">
+                <button className="focused-img_collapse-btn" onClick={handleCollapseBtnClick}>
                     <img src="src/assets/circle-xmark-regular 2.svg" alt="Collapse Icon" />
-                </div>
+                </button>
                 <p className="focused-img_msg focused-img_children">Do You Enjoy This Image ?</p>
                 <div className="focused-img_photo focused-img_children">
-                    <img src={clickedPhoto} alt="The Clicked Photo" />
+                    <img src={clickedPhoto.imgUrl} alt="The Clicked Photo" />
                 </div>
                 <button className="focused-img_like-btn focused-img_children">
                     <img src="src/assets/thumbs-up-solid (for-focused).svg" alt="" />

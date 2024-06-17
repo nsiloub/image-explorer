@@ -7,17 +7,23 @@ type ReactJsxElm =  React.JSX.Element;
 
 
 type MyCardsListProps = {
-    setClickedPhotId: Dispatch<string>,
+    setClickedPhotoObj: Dispatch<{imgUrl: string, likes: number}>,
     data: DataResult["arrOfResults"];
+    setImageIsFocused: Dispatch<boolean>,
 }
-export default function CardList({setClickedPhotId, data}: MyCardsListProps): ReactJsxElm {
+export default function CardList({setClickedPhotoObj, data, setImageIsFocused}: MyCardsListProps): ReactJsxElm {
     const arrayOfCards: ReactJsxElm[] = data.map((card) => {
-
         function handlePhotoClick(e: React.MouseEvent<HTMLButtonElement, MouseEvent>): void {
             const target = e.target as HTMLButtonElement
-            setClickedPhotId(target.id);
-            console.log("image clicked: ", target.id);
-        };    
+            
+            
+            const selectedPhoto = data.filter((photo) => {
+                return photo.id.toString() === target.id.toString();
+            })[0];
+            setClickedPhotoObj({imgUrl: selectedPhoto.webformatURL,
+                likes: selectedPhoto.likes});
+            setImageIsFocused(true);
+        };
 
         return <li key={card.id} className="card">
             <div className="card_clickAnim">

@@ -57,8 +57,9 @@ function FilterableGallery(): ReactJsxElm {
 
   const [pageNumberToDisplay, setPageNumberToDisplay] = useState(1);
   const [resultsPerPage, setResultsPerPage] = useState(20);
-  const [clickedPhotId, setClickedPhotId] = useState("");
-  
+  const [clickedPhotoObj, setClickedPhotoObj] = useState({likes: 0, imgUrl: "",});
+  const [imgIsFocused, setImgIsFocused] = useState(false);
+
   const [dataIsLoading, setDataIsLoading]   = useState(true);
   const [dataResult, setDataResult] = useState<DataResult>({
     totalAccessibleImages: 0,
@@ -125,7 +126,7 @@ function FilterableGallery(): ReactJsxElm {
     if(!dataIsLoading && dataResult.arrOfResults?.length > 0) {
       mainContentToDisplay = <>
         <ResultsMsg searchTerm={searchValue} numberOfRuslts={7} selectedCategory={category}/>
-        <CardList setClickedPhotId={setClickedPhotId} data={dataResult.arrOfResults}/>
+        <CardList setClickedPhotoObj={setClickedPhotoObj} data={dataResult.arrOfResults} setImageIsFocused={setImgIsFocused}/>
         <Pagination  dataResult={dataResult} resultsPerPage={resultsPerPage} setCurrentPage={setPageNumberToDisplay} currentPage={pageNumberToDisplay} />
       </>
     };
@@ -140,7 +141,7 @@ function FilterableGallery(): ReactJsxElm {
 
   return (
     <div className="filterable-gallery">
-      <FocusedImage />
+      <FocusedImage imageIsFocused={imgIsFocused} setImageIsFocused={setImgIsFocused} clickedPhoto={clickedPhotoObj}/>
       <header className="logo-and-filter">
         <TitleOrLogo />
         <Filter category={category} changeCategory={setCategory} searchValue={searchValue} changeSearchValue={setSearchValue}/>

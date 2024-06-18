@@ -1,7 +1,6 @@
-import { Dispatch, useState } from "react";
+import { Dispatch } from "react";
 import "../styles/FocusedImage.css"
 
-import { DataResult } from "../App";
 
 type ReactJsxElm = React.JSX.Element;
 type MyFocusedImageProps = {
@@ -17,6 +16,26 @@ export default function FocusedImage({imageIsFocused, setImageIsFocused, clicked
     };
     const overlayCollapseClassList = imageIsFocused ? "" : "collapse"
 
+    async function handleDownloadBtnClick(): Promise<void> {
+        const image = await fetch(clickedPhoto.imgUrl);
+        console.log("original url = ", clickedPhoto.imgUrl);
+
+        const nameSplit = clickedPhoto.imgUrl.split("/");
+        const duplicateName = nameSplit.pop()
+        
+        const imageBlob = await image.blob();
+        const imageLocalUrl = URL.createObjectURL(imageBlob)
+        console.log("new url = ", imageLocalUrl);
+
+        const anchorElm = document.createElement("a");
+        anchorElm.href = imageLocalUrl;
+        anchorElm.download = "" + duplicateName + "";
+
+        document.body.appendChild(anchorElm)
+        anchorElm.click();
+        document.body.removeChild(anchorElm);
+    }
+
     return(
         <div className={`overlay-container ${overlayCollapseClassList}`}>
             <div className="focused-img">
@@ -27,9 +46,9 @@ export default function FocusedImage({imageIsFocused, setImageIsFocused, clicked
                 <div className="focused-img_photo focused-img_children">
                     <img src={clickedPhoto.imgUrl} alt="The Clicked Photo" />
                 </div>
-                <button className="focused-img_like-btn focused-img_children">
-                    <img src="src/assets/thumbs-up-solid (for-focused).svg" alt="" />
-                    <p className="focused-img_like-btn_txt">Like</p>
+                <button className="focused-img_download-btn focused-img_children" onClick={handleDownloadBtnClick}>
+                    {/* <img src="src/assets/download-solid 2.svg" alt="" /> */}
+                    <p className="focused-img_download-btn_txt">Download It</p>
                 </button>
             </div>
         </div>

@@ -48,17 +48,24 @@
     align-self: flex-end;
     
     width: 5%;
+
+    background-color: transparent;
 }
 
-.focused-img_like-btn {
+.focused-img_download-btn {
+    /* width: max-content; */
     align-self: flex-end;
 
     display: flex;
     justify-content: center;
     align-items: center;
 }
-.focused-img_like-btn > p {
+.focused-img_download-btn > p {
     color: #9452FF;
+    background-color: aqua;
+}
+.focused-img_download-btn > img {
+    width: 5%;
 }
 
 .focused-img_msg {

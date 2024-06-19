@@ -1,0 +1,27 @@
+.branding *   {
+    width: 100%;
+    color: #fff;
+    
+    font-family: "CHASER";
+}
+.branding > a {
+    text-decoration: none;
+    display: block;
+    width: fit-content;
+}
+
+.branding_logo {
+    width: min-content;
+    border: solid #fff 0.3rem;
+    border-radius: 2rem;
+    
+    background-color: transparent;
+}
+.branding_logo > div {
+    font-size: 2rem;
+    
+    line-height: 2.4rem; /* Did this in order To remove the extra space below the text */
+    height: 2rem;
+    margin: 0.4rem;
+}
+  

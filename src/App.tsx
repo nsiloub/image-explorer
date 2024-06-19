@@ -1,5 +1,6 @@
 import Filter from "./components/Filter";
 import "./App.css";
+import './styles/Branding.css';
 import FocusedImage from "./components/FocusedImage";
 import Footer from "./components/Footer";
 import CardList from "./components/CardList";
@@ -10,11 +11,22 @@ import LoadingCardList from "./components/LoadingCardList";
 
 type ReactJsxElm = React.JSX.Element;
 
-function TitleOrLogo(): ReactJsxElm {
+function Branding(): ReactJsxElm {
+  function displayLogoOrTitle(): ReactJsxElm {
+    return (
+      <>
+        <h1 className="branding_title">Image Explorer</h1>
+        <a href="#">
+          <div className="branding_logo">
+            <div>iE</div>
+          </div>
+        </a>
+      </>
+    )
+  }
   return(
-    <div>
-      <h1 className="appTitle">IMAGE EXPLORER</h1>
-      <div className="logo"></div>
+    <div className="branding">
+      {displayLogoOrTitle()}
     </div>
   )
 }
@@ -142,8 +154,8 @@ function FilterableGallery(): ReactJsxElm {
   return (
     <div className="filterable-gallery">
       <FocusedImage imageIsFocused={imgIsFocused} setImageIsFocused={setImgIsFocused} clickedPhoto={clickedPhotoObj}/>
-      <header className="logo-and-filter">
-        <TitleOrLogo />
+      <header className="branding-and-filter">
+        <Branding />
         <Filter category={category} changeCategory={setCategory} searchValue={searchValue} changeSearchValue={setSearchValue}/>
       </header>
       <main>

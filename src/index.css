@@ -6,10 +6,23 @@
     padding: 0;
   }
   
-  body {
-    width: 100vw;
-  }
+@font-face {
+  font-family: "SpaceGrotesk", sans-serif;
+  src:local("SpaceGrotesk"), url("./assets/fonts/SpaceGrotesk/SpaceGrotesk[wght].ttf") format("truetype");
+  font-weight: 1 1000; /*The range of the weight*/
+}
 
-  #root {
-    width: 100%;
-  }
+@font-face {
+  font-family: "CHASER";
+  src: local("CHASER"), url("./assets/fonts/CHASER/CHASER.ttf") format("truetype");
+  font-weight: bold;
+}
+
+body {
+  font-family: "SpaceGrotesk";
+  font-weight: normal;
+}
+
+#root {
+  width: 100%;
+}

@@ -1,3 +1,7 @@
+:root {
+  --body-bg:#7B43D6;
+}
+
 /* Global styles for this component */
 ul, ol, li {
   list-style: none;
@@ -35,7 +39,7 @@ img {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background-color: #7B43D6;
+  background-color: var(--body-bg);
 }
 
 /* Styles for the Filterable Galery Component Ends*/
@@ -45,10 +49,13 @@ img {
 
 /* Styles for the header Part*/
 header {
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
+  background-color: var(--body-bg);
 
+  top: 0;
   position: sticky;
 }
 

@@ -4,23 +4,43 @@ import './styles/Branding.css';
 import FocusedImage from "./components/FocusedImage";
 import Footer from "./components/Footer";
 import CardList from "./components/CardList";
-import { ReactNode, useEffect, useState } from "react";
+import { Dispatch, ReactNode, useEffect, useState } from "react";
 import axios from "axios";
 import Pagination from "./components/Pagination";
 import LoadingCardList from "./components/LoadingCardList";
 
 type ReactJsxElm = React.JSX.Element;
 
-function Branding(): ReactJsxElm {
+type MyBrandingProps = {
+  logoIsShown: boolean,
+  setLogoIsShown: Dispatch<boolean>
+};
+function Branding( {logoIsShown, setLogoIsShown}: MyBrandingProps ): ReactJsxElm {
+
+  // Show Or Hide Logo/Title
+  useEffect(() => {
+    function showLogo(): void {
+      setLogoIsShown(window.scrollY > 200);
+    }
+    window.addEventListener("scroll", showLogo);
+
+    return () => {
+      window.removeEventListener("scroll", showLogo)
+    }
+  }, [logoIsShown, setLogoIsShown])
+
   function displayLogoOrTitle(): ReactJsxElm {
+    if(logoIsShown) {
+      return <a href="#">
+        <div className="branding_logo">
+          <div>iE</div>
+        </div>
+      </a>
+
+    }
     return (
       <>
         <h1 className="branding_title">Image Explorer</h1>
-        <a href="#">
-          <div className="branding_logo">
-            <div>iE</div>
-          </div>
-        </a>
       </>
     )
   }
@@ -64,6 +84,9 @@ export type DataResult = {
 }
 
 function FilterableGallery(): ReactJsxElm {
+  const [showLogo, setShowLogo] = useState(false);
+
+  
   const [category, setCategory] = useState<string>("Categories")
   const [searchValue, setSearchValue] = useState<string>("");
 
@@ -155,7 +178,7 @@ function FilterableGallery(): ReactJsxElm {
     <div className="filterable-gallery">
       <FocusedImage imageIsFocused={imgIsFocused} setImageIsFocused={setImgIsFocused} clickedPhoto={clickedPhotoObj}/>
       <header className="branding-and-filter">
-        <Branding />
+        <Branding logoIsShown={showLogo} setLogoIsShown={setShowLogo}/>
         <Filter category={category} changeCategory={setCategory} searchValue={searchValue} changeSearchValue={setSearchValue}/>
       </header>
       <main>

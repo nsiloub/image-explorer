@@ -56,7 +56,7 @@ header {
   background-color: var(--body-bg);
 
   top: 0;
-  position: sticky;
+  position: fixed;
 }
 
 

@@ -40,6 +40,8 @@ img {
   align-items: center;
   justify-content: center;
   background-color: var(--body-bg);
+
+  overflow-x: hidden;
 }
 
 /* Styles for the Filterable Galery Component Ends*/
@@ -50,13 +52,27 @@ img {
 /* Styles for the header Part*/
 header {
   width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
   background-color: var(--body-bg);
 
   top: 0;
   position: fixed;
+}
+.header--on-coloumn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+}
+.header--rowable {
+  display: flex;
+  justify-content: space-between;
+}
+@media (max-width: 530px) {
+  .header--on-coloumn, .header--rowable {
+    display: flex;
+    flex-direction: column;
+    align-items: center;  
+  }
 }
 
 

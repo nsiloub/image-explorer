@@ -7,7 +7,7 @@ type MyFocusedImageProps = {
     imageIsFocused: boolean,
     setImageIsFocused: Dispatch<boolean>,
 
-    clickedPhoto: {imgUrl: string, likes: number},
+    clickedPhoto: {imgUrl: string},
 }
 export default function FocusedImage({imageIsFocused, setImageIsFocused, clickedPhoto}: MyFocusedImageProps): ReactJsxElm {
 
@@ -18,14 +18,12 @@ export default function FocusedImage({imageIsFocused, setImageIsFocused, clicked
 
     async function handleDownloadBtnClick(): Promise<void> {
         const image = await fetch(clickedPhoto.imgUrl);
-        console.log("original url = ", clickedPhoto.imgUrl);
 
         const nameSplit = clickedPhoto.imgUrl.split("/");
         const duplicateName = nameSplit.pop()
         
         const imageBlob = await image.blob();
         const imageLocalUrl = URL.createObjectURL(imageBlob)
-        console.log("new url = ", imageLocalUrl);
 
         const anchorElm = document.createElement("a");
         anchorElm.href = imageLocalUrl;

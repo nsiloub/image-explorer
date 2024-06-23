@@ -7,7 +7,7 @@ type ReactJsxElm =  React.JSX.Element;
 
 
 type MyCardsListProps = {
-    setClickedPhotoObj: Dispatch<{imgUrl: string, likes: number}>,
+    setClickedPhotoObj: Dispatch<{imgUrl: string}>,
     data: DataResult["arrOfResults"];
     setImageIsFocused: Dispatch<boolean>,
 }
@@ -20,8 +20,7 @@ export default function CardList({setClickedPhotoObj, data, setImageIsFocused}: 
             const selectedPhoto = data.filter((photo) => {
                 return photo.id.toString() === target.id.toString();
             })[0];
-            setClickedPhotoObj({imgUrl: selectedPhoto.webformatURL,
-                likes: selectedPhoto.likes});
+            setClickedPhotoObj({imgUrl: selectedPhoto.webformatURL});
             setImageIsFocused(true);
         };
 

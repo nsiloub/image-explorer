@@ -92,7 +92,7 @@ function FilterableGallery(): ReactJsxElm {
 
   const [pageNumberToDisplay, setPageNumberToDisplay] = useState(1);
   const [resultsPerPage, setResultsPerPage] = useState(20);
-  const [clickedPhotoObj, setClickedPhotoObj] = useState({likes: 0, imgUrl: "",});
+  const [clickedPhotoObj, setClickedPhotoObj] = useState({imgUrl: "",});
   const [imgIsFocused, setImgIsFocused] = useState(false);
 
   const [dataIsLoading, setDataIsLoading]   = useState(true);
@@ -140,7 +140,6 @@ function FilterableGallery(): ReactJsxElm {
         totalAccessibleImages: data.totalHits,
         arrOfResults: data.hits
       })
-      // data ? setDataIsLoading(false) : setDataIsLoading(true);
       data && setDataIsLoading(false);
     } catch(e) {
       console.log("Error while fetching data: ", e);

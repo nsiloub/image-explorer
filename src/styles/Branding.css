@@ -11,21 +11,9 @@
 }
 
 .branding_logo {
-    width: min-content;
-    border: solid #fff 0.2rem;
-    border-radius: 5rem;
-    
-    background-color: transparent;
-}
-
-/* To change the size of the logo, adjust the div's 
-        font-size, line-height, height, and margin
-*/
-.branding_logo > div {
-    font-size: 1.5rem;
-    
-    line-height: 1.9rem; /* Did this in order To remove the extra space below the text */
-    height: 1.6rem;
-    margin: 0.4rem;
+    width: clamp(calc(1.8rem + 0.5vw), 3vw,  calc( 3rem + 0.1vw));
 }
   
+.branding_title {
+    font-size: clamp(calc(0.8rem + 2.5vw), 6vw, 2.5rem);
+}

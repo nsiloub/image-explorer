@@ -33,14 +33,14 @@ function Branding( {logoIsShown, setLogoIsShown}: MyBrandingProps ): ReactJsxElm
     if(logoIsShown) {
       return <a href="#">
         <div className="branding_logo">
-          <div>iE</div>
+          <img src="src/assets/logo.svg" alt="" />
         </div>
       </a>
 
     }
     return (
       <>
-        <h1 className="branding_title">Image Explorer</h1>
+        <p className="branding_title">Image Explorer</p>
       </>
     )
   }

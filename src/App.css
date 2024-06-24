@@ -1,7 +1,3 @@
-:root {
-  --body-bg:#7B43D6;
-}
-
 /* Global styles for this component */
 ul, ol, li {
   list-style: none;
@@ -56,22 +52,33 @@ header {
 
   top: 0;
   position: fixed;
+  padding: 2rem 0;
+
 }
 .header--on-coloumn {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  gap: 2rem;
+  justify-items: center;
+
 
 }
 .header--rowable {
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr 4fr;
   justify-content: space-between;
+  padding-left: calc(var(--dropdown-padding-horizontal) * 0.7);
 }
 @media (max-width: 530px) {
   .header--on-coloumn, .header--rowable {
+    
     display: flex;
     flex-direction: column;
-    align-items: center;  
+    align-items: center;
+    justify-content: space-evenly;
+    gap: 2rem;
+    padding-left: 0;
+    padding-right: 0;
   }
 }
 

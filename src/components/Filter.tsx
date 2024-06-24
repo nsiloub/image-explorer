@@ -14,6 +14,8 @@ function Categories({selectedCategory, changeCategory}: MyCategoriesProps): Reac
     const [dropdownHidden, setDropdownHidden] = useState(true);
     const [focusCounter, setFocusCounter] = useState(0);
 
+    const query = matchMedia("(max-width: 330px)");
+    const [smallFilter, setSmallFilter] = useState(query.matches);
     const dropdownIcon =  document.querySelector<HTMLSpanElement>(".category-component_dropdown-btn_icon");
     const menuWrapper = document.querySelector<HTMLDivElement>(".categories-component_menu-wrapper");
     const dropDownBtn = document.querySelector<HTMLButtonElement>('.category-component_dropdown-btn');
@@ -84,16 +86,33 @@ function Categories({selectedCategory, changeCategory}: MyCategoriesProps): Reac
         </li>
     });
 
+    // Effect for switching the state of smallFilter
+    useEffect(() => {
+        query.addEventListener("change", handleWidthChange);
+        function handleWidthChange(event: MediaQueryListEvent): void {
+            event.matches ? setSmallFilter(true) : setSmallFilter(false);
+        }
+        return () => {
+            query.removeEventListener("change", handleWidthChange);
+        }
+    }, [query]);
+    
+    let buttonContent: ReactJsxElm = <div className="dropdown-btn_big refocus-dropdown">
+        <p className="category-component_dropdown-btn_title refocus-dropdown">{selectedCategory}</p>
+        <span className="category-component_dropdown-btn_icon refocus-dropdown">
+            <img src="src/assets/chevron-down-solid.svg" alt="drop down icon" className="refocus-dropdown"/>
+        </span>
+    </div>
+    if(smallFilter) {
+        buttonContent = <div className="dropdown-btn_small refocus-dropdown">
+            <img src="src/assets/filter.svg" alt="filter icon" className="refocus-dropdown" />
+        </div>
+    }
+    
     return(
         <div className="categories-component refocus-dropdown">
             <button className="button category-component_dropdown-btn refocus-dropdown">
-                <div className="dropdown_title-and-icon-container refocus-dropdown">
-                    <p className="category-component_dropdown-btn_title refocus-dropdown">{selectedCategory}</p>
-                    <span className="category-component_dropdown-btn_icon refocus-dropdown">
-                        <img src="src/assets/chevron-down-solid.svg" alt="drop down icon" className="refocus-dropdown"/>
-                    </span>
-                </div>
-                
+                {buttonContent}
             </button>
             <div className="categories-component_menu-wrapper refocus-dropdown">
                 <div className="categories-component_menu refocus-dropdown">
@@ -233,7 +252,6 @@ export default function Filter({category, changeCategory, changeSearchValue}: My
         <div className="filter">
             <Categories selectedCategory={category} changeCategory={changeCategory} />
             <Search category={category} changeSearchValue={changeSearchValue}/>
-            <div className="filter_sameness-illusion"></div>
         </div>
     )
 }

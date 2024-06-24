@@ -18,6 +18,10 @@
   font-weight: bold;
 }
 
+html {
+  font-size: var(--regular-font-size);
+}
+
 body {
   font-family: "SpaceGrotesk";
   font-weight: normal;

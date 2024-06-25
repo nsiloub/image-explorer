@@ -51,9 +51,12 @@ header {
   background-color: var(--body-bg);
 
   top: 0;
-  position: fixed;
+  /* position: fixed; */
   padding: 2rem 0;
 
+}
+.header--fixed {
+  position: fixed;
 }
 .header--on-coloumn {
   display: grid;

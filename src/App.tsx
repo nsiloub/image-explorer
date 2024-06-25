@@ -4,7 +4,7 @@ import './styles/Branding.css';
 import FocusedImage from "./components/FocusedImage";
 import Footer from "./components/Footer";
 import CardList from "./components/CardList";
-import { Dispatch, ReactNode, useEffect, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import axios from "axios";
 import Pagination from "./components/Pagination";
 import LoadingCardList from "./components/LoadingCardList";
@@ -13,21 +13,9 @@ type ReactJsxElm = React.JSX.Element;
 
 type MyBrandingProps = {
   logoIsShown: boolean,
-  setLogoIsShown: Dispatch<boolean>
 };
-function Branding( {logoIsShown, setLogoIsShown}: MyBrandingProps ): ReactJsxElm {
+function Branding( {logoIsShown}: MyBrandingProps ): ReactJsxElm {
 
-  // Show Or Hide Logo/Title
-  useEffect(() => {
-    function showLogo(): void {
-      setLogoIsShown(window.scrollY > 200);
-    }
-    window.addEventListener("scroll", showLogo);
-
-    return () => {
-      window.removeEventListener("scroll", showLogo)
-    }
-  }, [logoIsShown, setLogoIsShown])
 
   function displayLogoOrTitle(): ReactJsxElm {
     if(logoIsShown) {
@@ -85,7 +73,6 @@ export type DataResult = {
 
 function FilterableGallery(): ReactJsxElm {
   const [showLogo, setShowLogo] = useState(false);
-
   
   const [category, setCategory] = useState<string>("Categories")
   const [searchValue, setSearchValue] = useState<string>("");
@@ -173,11 +160,34 @@ function FilterableGallery(): ReactJsxElm {
     return mainContentToDisplay;
   }
 
+  // Show Or Hide Logo/Title; And Stick the header
+  // Sticking the header was not working properly accross
+  // different browsers with simple CSS stick/fixed Properties
+  useEffect(() => {
+    const header = document.querySelector<HTMLElement>("header");
+
+    window.addEventListener("scroll", handleHeaderFix);
+
+    function handleHeaderFix(): void {
+      setShowLogo(window.scrollY >= 200); // show/Hide Logo
+
+      // stick the header 
+      if(window.scrollY >= 1)  {
+        header?.classList.add("header--fixed")
+      } else {
+        header?.classList.remove("header--fixed");
+      }
+    };
+    return () => {
+      window.removeEventListener("scroll", handleHeaderFix);
+    }
+  }, []);
+
   return (
     <div className="filterable-gallery">
       <FocusedImage imageIsFocused={imgIsFocused} setImageIsFocused={setImgIsFocused} clickedPhoto={clickedPhotoObj}/>
       <header className={showLogo ? "header--rowable" : "header--on-coloumn"}>
-        <Branding logoIsShown={showLogo} setLogoIsShown={setShowLogo}/>
+        <Branding logoIsShown={showLogo} />
         <Filter category={category} changeCategory={setCategory} searchValue={searchValue} changeSearchValue={setSearchValue}/>
       </header>
       <main>

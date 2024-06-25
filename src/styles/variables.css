@@ -1,9 +1,0 @@
-:root {
-    --regular-font-size: clamp(1rem, 2vw, calc(2rem + 1.2vw));
-    --body-bg:#7B43D6;
-
-    --dropdown-padding-vertical: 0.5rem;
-    --dropdown-padding-horizontal: 1rem;
-
-    --elm-radius: 5%
-}

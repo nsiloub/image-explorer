@@ -12,7 +12,7 @@ button:focus
 .button {
   border-radius: 0.9rem;
   border: none;
-  background-color:white;
+  background-color: var(--light-elements-color);
 }
 
 img {
@@ -35,7 +35,7 @@ img {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background-color: var(--body-bg);
+  background-color: var(--light-elements-color);
 
   overflow-x: hidden;
 }
@@ -48,11 +48,16 @@ img {
 /* Styles for the header Part*/
 header {
   width: 100%;
-  background-color: var(--body-bg);
+  /* background-color: var(--extra-light-color); */
 
   top: 0;
   /* position: fixed; */
   padding: 2rem 0;
+
+  background-color: var(--vivid-elements-color);
+  background-image: url("src/assets/nature-g4ed01dd97_1280.jpg");
+  background-size: contain;
+  background-blend-mode: multiply;
 
 }
 .header--fixed {

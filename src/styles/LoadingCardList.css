@@ -6,7 +6,7 @@
 }
 
 ._loading-card {
-    background-color: #452578;
+    background-color: var(--dark-gray);
     display: grid;
     
     border-radius: 0.9rem;
@@ -17,19 +17,19 @@
 }
 
 .loading-card_photo {
-    background-color: #6A4C9B;
     border-radius: 0.9rem;
 }
 
 .line {
-    background-color: #C1C1C1;
+    background-color: var(--light-elements-color);;
     border-radius: 0.9rem;
 }
 .circle {
-    background-color: #6A4C9B;
     border-radius: 0.9rem;
 }
-
+.loading-card_photo, .circle {
+    background-color: var(--light-gray);
+}
 .loading-card_infos {
     width: 100%; 
     display: flex;

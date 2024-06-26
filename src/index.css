@@ -11,7 +11,19 @@
   --dropdown-padding-vertical: 0.5rem;
   --dropdown-padding-horizontal: 1rem;
 
-  --elm-radius: 5%
+  --elm-radius: 5%;
+
+  --dark-elements-color: #05000D;
+  --light-elements-color: #EAEAEA;
+  --vivid-elements-color: #7B43D6;
+  --vivid-contrast-color: #F1E9FF;
+  --extra-light-color: #ffffff;
+
+  --dark-transparent: rgba(5, 0, 13, 0.95);
+
+  --dark-gray: #575757;
+  --light-gray: #BABABA;
+
 }
   
 @font-face {

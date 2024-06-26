@@ -49,7 +49,7 @@ function ResultsMsg({numberOfRuslts, searchTerm, selectedCategory}: MyResultsMsg
     <section className="result-msg-container">
       <p className="result-msg-container_msg"><strong>
         {numberOfRuslts}
-        </strong> Images Found For the term <strong>
+        </strong> images are accessible For the term <strong>
           {searchTerm}
           </strong> in the <strong>{selectedCategory}</strong> Category</p>
     </section>
@@ -146,7 +146,7 @@ function FilterableGallery(): ReactJsxElm {
     };
     if(!dataIsLoading && dataResult.arrOfResults?.length > 0) {
       mainContentToDisplay = <>
-        <ResultsMsg searchTerm={searchValue} numberOfRuslts={7} selectedCategory={category}/>
+        <ResultsMsg searchTerm={searchValue} numberOfRuslts={dataResult.totalAccessibleImages} selectedCategory={category}/>
         <CardList setClickedPhotoObj={setClickedPhotoObj} data={dataResult.arrOfResults} setImageIsFocused={setImgIsFocused}/>
         <Pagination  dataResult={dataResult} resultsPerPage={resultsPerPage} setCurrentPage={setPageNumberToDisplay} currentPage={pageNumberToDisplay} />
       </>

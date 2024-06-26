@@ -1,6 +1,6 @@
 .overlay-container {
     width: 100%;
-    background-color: rgb(10, 1, 24, 0.9);
+    background-color: var(--dark-transparent);
     
     display: flex;
     justify-content: center;
@@ -22,7 +22,7 @@
     padding-top: 0;
     padding-bottom: 0;
     padding-right: 0;
-    background-color: #05000D;
+    background-color: var(--dark-elements-color);
     border-radius: var(--elm-radius);
 
 }
@@ -59,7 +59,7 @@
 }
 .focused-img_download-btn > p {
     color: #9452FF;
-    background-color: aqua;
+    background-color: var(--extra-light-color);
 }
 .focused-img_download-btn > img {
     width: 5%;

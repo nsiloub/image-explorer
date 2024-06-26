@@ -84,7 +84,7 @@
     padding: var(--dropdown-padding-vertical) var(--dropdown-padding-horizontal);
     overflow-x: visible;
     overflow-y: scroll;
-    background-color: #ffffff;
+    background-color: var(--extra-light-color);
     border-radius: 0.9rem;
 }
 
@@ -94,9 +94,9 @@
 
 /* STYLES FOR THE SEARCH */
 .search-component {
-    background-color: #05000D;
+    background-color: var(--extra-light-color);
     height: 100%;
-    border: solid #fff 0.1rem;
+    border: solid var(--dark-elements-color) 0.1rem;
     border-radius: 0.9rem;
     display: flex;
     justify-content: space-between;

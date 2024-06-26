@@ -9,7 +9,7 @@
 }
 
 .card {
-    background-color: #05000D;
+    background-color: var(--dark-elements-color);
     display: grid;
     justify-items: center;
     justify-content: center;

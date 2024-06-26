@@ -1,6 +1,6 @@
 footer {
     width: 100%;
-    background-color: #12002F;
+    background-color: var(--dark-elements-color);
     display: flex;
     flex-direction: column;
     align-items: center;

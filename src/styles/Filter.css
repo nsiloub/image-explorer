@@ -36,6 +36,7 @@
 }
 .dropdown-btn_small {
     min-width: 1.5rem;
+    max-height: 0.8rem;
 }
 .dropdown-btn_small > img {
     width: 100%;
@@ -94,9 +95,9 @@
 
 /* STYLES FOR THE SEARCH */
 .search-component {
-    background-color: var(--extra-light-color);
+    background-color: var(--dark-elements-color);
     height: 100%;
-    border: solid var(--dark-elements-color) 0.1rem;
+    border: solid var(--light-elements-color) 0.1rem;
     border-radius: 0.9rem;
     display: flex;
     justify-content: space-between;

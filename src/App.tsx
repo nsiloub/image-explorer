@@ -1,6 +1,4 @@
-import Filter from "./components/Filter";
 import "./App.css";
-import './styles/Branding.css';
 import FocusedImage from "./components/FocusedImage";
 import Footer from "./components/Footer";
 import CardList from "./components/CardList";
@@ -8,36 +6,10 @@ import { ReactNode, useEffect, useState } from "react";
 import axios from "axios";
 import Pagination from "./components/Pagination";
 import LoadingCardList from "./components/LoadingCardList";
+import Header from "./components/Header";
+
 
 type ReactJsxElm = React.JSX.Element;
-
-type MyBrandingProps = {
-  logoIsShown: boolean,
-};
-function Branding( {logoIsShown}: MyBrandingProps ): ReactJsxElm {
-
-
-  function displayLogoOrTitle(): ReactJsxElm {
-    if(logoIsShown) {
-      return <a href="#">
-        <div className="branding_logo">
-          <img src="src/assets/logo.svg" alt="" />
-        </div>
-      </a>
-
-    }
-    return (
-      <>
-        <p className="branding_title">Image Explorer</p>
-      </>
-    )
-  }
-  return(
-    <div className="branding">
-      {displayLogoOrTitle()}
-    </div>
-  )
-}
 
 type MyResultsMsgProps = {
   numberOfRuslts: number, 
@@ -183,13 +155,13 @@ function FilterableGallery(): ReactJsxElm {
     }
   }, []);
 
+  // when the "branding_title" element reaches the top
+  // Remove the "standalone Filter", other whise show it
+
   return (
     <div className="filterable-gallery">
       <FocusedImage imageIsFocused={imgIsFocused} setImageIsFocused={setImgIsFocused} clickedPhoto={clickedPhotoObj}/>
-      <header className={showLogo ? "header--rowable" : "header--on-coloumn"}>
-        <Branding logoIsShown={showLogo} />
-        <Filter category={category} changeCategory={setCategory} searchValue={searchValue} changeSearchValue={setSearchValue}/>
-      </header>
+      <Header category={category} changeCategory={setCategory} changeSearchValue={setSearchValue} logoIsShown={showLogo}/>
       <main>
         {displayContentOrLoadings()}
       </main>

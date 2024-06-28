@@ -239,10 +239,9 @@ function Search({category, changeSearchValue, }: MySearcProps): ReactJsxElm {
 };
 
 
-type MyFilterProps = {
+export type MyFilterProps = {
     category: string,
     changeCategory: Dispatch<string>,
-    searchValue: string,
     changeSearchValue: Dispatch<string>,
 }
 

@@ -45,50 +45,6 @@ img {
 
 
 
-/* Styles for the header Part*/
-header {
-  width: 100%;
-  /* background-color: var(--extra-light-color); */
-
-  top: 0;
-  /* position: fixed; */
-  padding: 2rem 0;
-
-  background-color: var(--vivid-elements-color);
-  background-image: url("src/assets/nature-g4ed01dd97_1280.jpg");
-  background-size: contain;
-  background-blend-mode: multiply;
-
-}
-.header--fixed {
-  position: fixed;
-}
-.header--on-coloumn {
-  display: grid;
-  grid-template-rows: 1fr 1fr;
-  gap: 2rem;
-  justify-items: center;
-
-
-}
-.header--rowable {
-  display: grid;
-  grid-template-columns: 1fr 4fr;
-  justify-content: space-between;
-  padding-left: calc(var(--dropdown-padding-horizontal) * 0.7);
-}
-@media (max-width: 530px) {
-  .header--on-coloumn, .header--rowable {
-    
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-evenly;
-    gap: 2rem;
-    padding-left: 0;
-    padding-right: 0;
-  }
-}
 
 
 /* Styles for the header Part Ends */

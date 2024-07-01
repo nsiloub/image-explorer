@@ -135,7 +135,7 @@ function FilterableGallery(): ReactJsxElm {
   return (
     <div className="filterable-gallery">
       <FocusedImage imageIsFocused={imgIsFocused} setImageIsFocused={setImgIsFocused} clickedPhoto={clickedPhotoObj}/>
-      <Header category={category} changeCategory={setCategory} changeSearchValue={setSearchValue} logoIsShown={showLogo}/>
+      <Header category={category} changeCategory={setCategory} searchValue={searchValue} changeSearchValue={setSearchValue} logoIsShown={showLogo}/>
       <main>
         {displayContentOrLoadings()}
       </main>

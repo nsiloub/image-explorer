@@ -6,15 +6,10 @@
     align-items: center;
     padding: 0 1rem;
 }
-/* .navbar--fixed {
-    top: 0;
-    position: fixed;
-    background-color: var(--light-elements-color);
-} */
 .navbar_default {
     width: 100%;
     /* background-color: rgba(5, 0, 13, 0.45); */
-    color: var(--extra-light-color);
+    /* color: var(--extra-light-color); */
     font-weight: bold;
     font-size: clamp(0.7rem, 5vw, calc(20px + 0.2vw));
     /* font-size: 0.8rem; */

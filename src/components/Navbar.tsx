@@ -1,16 +1,19 @@
 import Filter from "./Filter";
 import "../styles/Navbar.css";
 import { MyHeaderProps } from "./Header";
-import { Dispatch, useEffect, useState } from "react";
+import { Dispatch, useEffect, useMemo, useState } from "react";
 
 
 type ReactJsxElm = React.JSX.Element;
 
 type MyNavbarProps = MyHeaderProps & {
     headerIsFixed: boolean,
-    setHeaderIsFixed: Dispatch<boolean>
+    setHeaderIsFixed: Dispatch<boolean>,
+    searchBarIsFocused: boolean,
+    displayFilterElmCounter: number,
+    setDisplayFilterElmCounter: Dispatch<number>
 };
-export default function NavBar( {headerIsFixed, setHeaderIsFixed, changeCategory, logoIsShown, changeSearchValue, category}: MyNavbarProps): ReactJsxElm {
+export default function NavBar(props: MyNavbarProps): ReactJsxElm {
     
     // The classList can be changed by the component that
     // Calls the LogoElm
@@ -33,11 +36,39 @@ export default function NavBar( {headerIsFixed, setHeaderIsFixed, changeCategory
         </ul>
     };
     
+    function DefaultContentInNavbar(): ReactJsxElm {
+        return (
+            <div className="navbar_default">
+                <LogoElm classList="navbar_default_logo"/>
+                <Infos classList="navbar_default_infos" />
+            </div>
+        )
+    }
+
+    function NothingIsFocusedInNavbar(): ReactJsxElm {
+        function handleSearchBtnClick(): void {
+            props.setDisplayFilterElmCounter(props.displayFilterElmCounter + 1);
+        }
+
+        return (
+            <div className="navbar_searchbar-nofocus">
+                <LogoElm classList="navbar_searchbar-nofocus_logo"/>
+                <button className="navbar_searchbar-nofocus_searchbtn" onClick={handleSearchBtnClick}>
+                    <img src="src/assets/single-search-logo.svg"
+                    alt="Search Icon" />
+                </button>
+                <button className="navbar_searchbar-nofocus_menubtn">
+                    <img src="src/assets/bars-solid.svg" alt="Menu Icon" />
+                </button>
+            </div>
+        )
+    }
+
+
     // state that contains the changing content of the Navbar
-    const [navbarContent, setNavbarContent] = useState(<div className="navbar_default">
-        <LogoElm classList="navbar_default_logo"/>
-        <Infos classList="navbar_default_infos" />
-    </div>)
+    const [navbarContent, setNavbarContent] = useState(<DefaultContentInNavbar />)
+
+
 
     // function displayReactiveContent(): ReactJsxElm{
     //     let elemToDisplay = <></>
@@ -94,29 +125,58 @@ export default function NavBar( {headerIsFixed, setHeaderIsFixed, changeCategory
     //     return elemToDisplay
     // }
 
-    // Effect to fix the navbar and add styles
-    // Sticking the header was not working properly accross
-    // different browsers with simple CSS stick/fixed Properties
+
+    console.log();
+    // Effect to fix the header and add styles
+    // Css's sticky property wasn't working accross multiple
+    // browsers, so i had to use some JS/TS for that
     useEffect(() => {
         const header = document.querySelector<HTMLElement>("header");
         const appTitle = document.querySelector<HTMLElement>(".header_apptitle");
+        const navbarElm  = document.querySelector<HTMLElement>(".navbar");
         
         const intersectionObserver = new IntersectionObserver((entries) => {
             if(entries[0].intersectionRatio <= 0) {
-                setHeaderIsFixed(true);
-                // appTitle?.classList.add('navbar--fixed')
-                header?.classList.add("header--fixed");
-            } else {
-                setHeaderIsFixed(false)
-                header?.classList.remove("header--fixed");
+                props.setHeaderIsFixed(true);
+            } else{
+                // setHeaderIsFixed(false)
             }
 
         });
-        appTitle && intersectionObserver.observe(appTitle);
+        header && intersectionObserver.observe(header);
         return () => {
             intersectionObserver.disconnect()
         }
-    }, [headerIsFixed, setHeaderIsFixed]);
+
+    }, [props.headerIsFixed, props.setHeaderIsFixed]);
+
+    
+    // handling the case where searchbar is 
+    // focused while header is fixed
+    
+    useMemo(() => {
+        const searchbarInputElmValue = document.querySelector<HTMLInputElement>(".search-component_bar")?.value;
+        if(props.headerIsFixed ) {
+            if(!props.searchBarIsFocused || searchbarInputElmValue ) {
+                
+                //Change the navbarContent
+                setNavbarContent(<NothingIsFocusedInNavbar />); 
+                
+                //! To Implement: Preset a temporary input value corresponding
+                //  to the recent user's search, using the "searchbarInputElmValue" state' value
+                // console.log("got some value = ", searchbarInputElmValue);
+                // console.log("recent search value = ", props.searchValue)
+
+
+            }
+        }
+
+        return () => {
+            setNavbarContent(<DefaultContentInNavbar />)
+        }
+    }, [props.headerIsFixed, props.searchBarIsFocused, props.displayFilterElmCounter, props.setDisplayFilterElmCounter, props.searchValue]);
+
+
 
     return (
     <div className="navbar">

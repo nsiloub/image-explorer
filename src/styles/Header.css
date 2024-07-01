@@ -1,21 +1,23 @@
 /* Styles for the header Part*/
 header {
   width: 100%;
-  padding: 2rem 0;
-  
-  /* padding: 2rem 1rem; */
-  padding-top: 0.8rem;
-
-
-  background-color: var(--vivid-elements-color);
-  background-image: var(--header-gradient), url("src/assets/nature-g4ed01dd97_1280.jpg");
-  background-size: contain;
+}
+.header--default {
+    background-color: var(--vivid-elements-color);
+    background-image: var(--header-gradient), url("src/assets/nature-g4ed01dd97_1280.jpg");
+    background-size: contain;
+    padding: 2rem 0;
+    padding-top: 0.8rem;  
 }
 .header--fixed {
   position: fixed;
   top: 0 ;
+  background-color: var(--light-elements-color);
+  padding: 0.8rem 0;
 }
-.header--on-coloumn {
+
+
+.header--on-coloumn, .header--default {
   display: grid;
   grid-template-rows: 1fr 1fr;
   gap: 2rem;

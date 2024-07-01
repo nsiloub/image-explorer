@@ -23,6 +23,8 @@
 
   --dark-gray: #575757;
   --light-gray: #BABABA;
+  /* --header-gradient: linear-gradient(to bottom,  rgba(123, 67, 214, 0.95), rgb(123, 67, 214, 0.25)) */
+  --header-gradient: linear-gradient(to bottom,  rgba(29, 8, 63, 0.90),  rgba(5, 0, 13, 0.25))
 
 }
   

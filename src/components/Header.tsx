@@ -1,8 +1,7 @@
-import { Dispatch } from "react";
+import { Dispatch, useState } from "react";
 import Filter from "./Filter";
 import "../styles/Header.css";
-import "../styles/Branding.css"
-import NavBar from "./Navbar";
+import NavBar from './Navbar';
 
 type ReactJsxElm = React.JSX.Element;
 export type MyHeaderProps = {
@@ -13,41 +12,23 @@ export type MyHeaderProps = {
 };
 
 export default function Header(props: MyHeaderProps): ReactJsxElm {
+    const [headerIsFixed, setHeaderIsFixed] = useState(false);
+    console.log("headerIsFixed = ",  headerIsFixed)
     
-    function Branding( ): ReactJsxElm {
-
-      function displayLogoOrTitle(): ReactJsxElm {
-          if(props.logoIsShown) {
-          return <a href="#">
-              <div className="branding_logo">
-              <img src="src/assets/logo.svg" alt="" />
-              </div>
-          </a>
-
-          }
-          return (
-          <>
-              <p className="branding_title">Image Explorer</p>
-          </>
-          )
-      }
-
-      
-      
-    return(
-        <div className="branding">
-        {displayLogoOrTitle()}
-        </div>
-      )
+    function Title(): ReactJsxElm {
+      const displayContent = headerIsFixed ? <></> : <p className="header_apptitle">Image Explorer</p>
+      return <>
+        {displayContent}
+      </>
     }
       
 
     return (
       <header className={props.logoIsShown ? "header--rowable" : "header--on-coloumn"}>
 
-        <NavBar category={props.category} changeCategory={props.changeCategory} changeSearchValue={props.changeSearchValue} logoIsShown={props.logoIsShown}/>
-        <Branding />
-        {/* <Filter category={props.category} changeCategory={props.changeCategory} changeSearchValue={props.changeSearchValue}/> */}
+        <NavBar category={props.category} changeCategory={props.changeCategory} changeSearchValue={props.changeSearchValue} logoIsShown={props.logoIsShown} headerIsFixed={headerIsFixed} setHeaderIsFixed={setHeaderIsFixed} />
+        <Title />
+        <Filter category={props.category} changeCategory={props.changeCategory} changeSearchValue={props.changeSearchValue}/>
       </header>
     )
 };

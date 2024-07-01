@@ -1,0 +1,51 @@
+.navbar {
+    width: 100%;
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 1rem;
+}
+/* .navbar--fixed {
+    top: 0;
+    position: fixed;
+    background-color: var(--light-elements-color);
+} */
+.navbar_default {
+    width: 100%;
+    /* background-color: rgba(5, 0, 13, 0.45); */
+    color: var(--extra-light-color);
+    font-weight: bold;
+    font-size: clamp(0.7rem, 5vw, calc(20px + 0.2vw));
+    /* font-size: 0.8rem; */
+    display:  flex;
+
+    gap: clamp( calc(20px), calc(0.5rem + 9vw), calc(50rem) ) ;
+
+    align-items: center;
+}
+.navbar_default a, .navbar_default button {
+    text-decoration: none;
+    background-color: transparent;
+    border: none;
+    color: var(--extra-light-color);
+}
+.navbar_default_logo {
+    width: clamp(calc(calc(25px + 2vw)), 5%, 3rem);
+}
+.navbar_default_logo > img {
+    width: 100%;
+}
+
+.navbar_default_infos {
+    width: 100%;
+    display: grid;
+    grid-template-columns: max-content max-content clamp(calc(calc(20px + 2vw)), 5%, 3rem);
+    column-gap: 7%;
+    justify-content: end;
+    align-items: center;
+}
+.navbar_default_infos > li > button > img {
+    width: 100%;
+    border-radius: 50%;
+} 

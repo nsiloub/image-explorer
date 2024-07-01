@@ -132,32 +132,6 @@ function FilterableGallery(): ReactJsxElm {
     return mainContentToDisplay;
   }
 
-  // Show Or Hide Logo/Title; And Stick the header
-  // Sticking the header was not working properly accross
-  // different browsers with simple CSS stick/fixed Properties
-  useEffect(() => {
-    const header = document.querySelector<HTMLElement>("header");
-
-    window.addEventListener("scroll", handleHeaderFix);
-
-    function handleHeaderFix(): void {
-      setShowLogo(window.scrollY >= 200); // show/Hide Logo
-
-      // stick the header 
-      if(window.scrollY >= 1)  {
-        header?.classList.add("header--fixed")
-      } else {
-        header?.classList.remove("header--fixed");
-      }
-    };
-    return () => {
-      window.removeEventListener("scroll", handleHeaderFix);
-    }
-  }, []);
-
-  // when the "branding_title" element reaches the top
-  // Remove the "standalone Filter", other whise show it
-
   return (
     <div className="filterable-gallery">
       <FocusedImage imageIsFocused={imgIsFocused} setImageIsFocused={setImgIsFocused} clickedPhoto={clickedPhotoObj}/>

@@ -6,11 +6,11 @@ export default function Footer(): ReactJsxElm {
         <footer>
             <div>
                 <span>
-                    <section className="footer_about-us">
+                    <section className="footer_about-us" id='aboutus'>
                         <h1 className="footer_about-us_title">What is Image Explorer ?</h1>
                         <p className="footer_about-us_description">Image Explorer is the leading image platform that allows you to browse and interact with thousands of images posted by real image enthusiasts.</p>
                     </section>
-                    <section className="footer_contact">
+                    <section className="footer_contact" id='contacts'>
                         <h1 className="footer_contact_title">Contact us</h1>
                         <p className="footer_contact_mail">contact@imageexplorer.com</p>    
                     </section>

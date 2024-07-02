@@ -2,6 +2,8 @@ import Filter from "./Filter";
 import "../styles/Navbar.css";
 import { MyHeaderProps } from "./Header";
 import { Dispatch, useEffect, useMemo, useState } from "react";
+import { LogoIcon } from "./Icons";
+import { appColors } from "../helpers/variables";
 
 
 type ReactJsxElm = React.JSX.Element;
@@ -14,20 +16,21 @@ type MyNavbarProps = MyHeaderProps & {
     setDisplayFilterElmCounter: Dispatch<number>
 };
 export default function NavBar(props: MyNavbarProps): ReactJsxElm {
-    
+    const searchbarInputElmValue = document.querySelector<HTMLInputElement>(".search-component_bar")?.value;
+
     // The classList can be changed by the component that
     // Calls the LogoElm
-    function LogoElm({classList} : {classList: string}): ReactJsxElm {
-        classList.length < 1 ? classList = "navbar_logo-alone" : classList; // changes or defaults to the predefined
+    function LogoElm({classList, mainColor} : {mainColor: string, classList: string}): ReactJsxElm {
+        classList.length < 1 ? classList = "navbar-logo-elm" : classList = `navbar-logo-elm ${classList}`; // changes or defaults to the predefined
         return (
             <a href="#" className={classList}>
-                <img src="src/assets/logo.svg" alt="" />
+                <LogoIcon mainColor={mainColor}/>
             </a>
         )
     };
     
     function Infos({classList} : {classList: string}): ReactJsxElm {
-        classList.length < 1 ? classList = "navbar_infos-alone" : classList; // changes or defaults to the predefined
+        classList.length < 1 ? classList = "navbar_infos" : classList = `navbar_infos ${classList}`; // changes or defaults to the predefined
 
         return <ul className={classList}>
             <li><a href="#aboutus">About Us</a></li>
@@ -38,8 +41,8 @@ export default function NavBar(props: MyNavbarProps): ReactJsxElm {
     
     function DefaultContentInNavbar(): ReactJsxElm {
         return (
-            <div className="navbar_default">
-                <LogoElm classList="navbar_default_logo"/>
+            <div className="navbar_default navbar-content-elm">
+                <LogoElm classList="navbar_default_logo" mainColor={appColors["extra-light-color"]}/>
                 <Infos classList="navbar_default_infos" />
             </div>
         )
@@ -47,22 +50,41 @@ export default function NavBar(props: MyNavbarProps): ReactJsxElm {
 
     function NothingIsFocusedInNavbar(): ReactJsxElm {
         function handleSearchBtnClick(): void {
-            props.setDisplayFilterElmCounter(props.displayFilterElmCounter + 1);
+            // props.setDisplayFilterElmCounter(props.displayFilterElmCounter + 1);
+            
+            
+            //! To Implement: Preset a temporary input value corresponding
+            //  to the recent user's search, using the "searchbarInputElmValue" state' value
+            console.log("got some value = ", searchbarInputElmValue);
+            console.log("recent search value = ", props.searchValue);
+
+            setNavbarContent(<FocusedSearchBar />)
         }
 
         return (
-            <div className="navbar_searchbar-nofocus">
-                <LogoElm classList="navbar_searchbar-nofocus_logo"/>
+            <div className="navbar_searchbar-nofocus navbar-content-elm">
+                <LogoElm classList="navbar_searchbar-nofocus_logo" mainColor={appColors["dark-elements-color"]}/>
                 <button className="navbar_searchbar-nofocus_searchbtn" onClick={handleSearchBtnClick}>
                     <img src="src/assets/single-search-logo.svg"
                     alt="Search Icon" />
                 </button>
                 <button className="navbar_searchbar-nofocus_menubtn">
-                    <img src="src/assets/bars-solid.svg" alt="Menu Icon" />
+                    <img src="src/assets/menu-bar.svg" alt="Menu Icon" />
                 </button>
             </div>
         )
-    }
+    };
+
+    function FocusedSearchBar(): ReactJsxElm {
+        return (
+        <div className="navbar_focusedSearchBar">
+            <button className="focusedSearchBar_goBackBtn">
+                <img src="src/assets/go-back-icon.svg" alt="" />
+            </button>
+            <Filter category={props.category} changeCategory={props.changeCategory} changeSearchValue={props.changeSearchValue}/>
+        </div>
+        )
+    };
 
 
     // state that contains the changing content of the Navbar
@@ -132,14 +154,10 @@ export default function NavBar(props: MyNavbarProps): ReactJsxElm {
     // browsers, so i had to use some JS/TS for that
     useEffect(() => {
         const header = document.querySelector<HTMLElement>("header");
-        const appTitle = document.querySelector<HTMLElement>(".header_apptitle");
-        const navbarElm  = document.querySelector<HTMLElement>(".navbar");
         
         const intersectionObserver = new IntersectionObserver((entries) => {
             if(entries[0].intersectionRatio <= 0) {
                 props.setHeaderIsFixed(true);
-            } else{
-                // setHeaderIsFixed(false)
             }
 
         });
@@ -153,20 +171,13 @@ export default function NavBar(props: MyNavbarProps): ReactJsxElm {
     
     // handling the case where searchbar is 
     // focused while header is fixed
-    
     useMemo(() => {
-        const searchbarInputElmValue = document.querySelector<HTMLInputElement>(".search-component_bar")?.value;
         if(props.headerIsFixed ) {
             if(!props.searchBarIsFocused || searchbarInputElmValue ) {
                 
                 //Change the navbarContent
                 setNavbarContent(<NothingIsFocusedInNavbar />); 
                 
-                //! To Implement: Preset a temporary input value corresponding
-                //  to the recent user's search, using the "searchbarInputElmValue" state' value
-                // console.log("got some value = ", searchbarInputElmValue);
-                // console.log("recent search value = ", props.searchValue)
-
 
             }
         }
@@ -174,7 +185,7 @@ export default function NavBar(props: MyNavbarProps): ReactJsxElm {
         return () => {
             setNavbarContent(<DefaultContentInNavbar />)
         }
-    }, [props.headerIsFixed, props.searchBarIsFocused, props.displayFilterElmCounter, props.setDisplayFilterElmCounter, props.searchValue]);
+    }, [props.headerIsFixed, props.searchBarIsFocused, props.displayFilterElmCounter, props.setDisplayFilterElmCounter, props.searchValue, searchbarInputElmValue ]);
 
 
 

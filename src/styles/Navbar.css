@@ -1,3 +1,4 @@
+/* GENERIC NAVBAR AND ITS CONTENT'S STYLES */
 .navbar {
     width: 100%;
     
@@ -6,17 +7,28 @@
     align-items: center;
     padding: 0 1rem;
 }
-.navbar_default {
+.navbar-content-elm {
     width: 100%;
-    /* background-color: rgba(5, 0, 13, 0.45); */
-    /* color: var(--extra-light-color); */
     font-weight: bold;
     font-size: clamp(0.7rem, 5vw, calc(20px + 0.2vw));
-    /* font-size: 0.8rem; */
+}
+.navbar-logo-elm {
+    width: clamp(calc(calc(25px + 2vw)), 5%, 3rem);
+    
+
+}
+.navbar button {
+    border: none;
+}
+/*END: GENERIC NAVBAR AND ITS CONTENT'S STYLES */
+
+
+/* STYLES FOR EACH NAVBAR'S CONTENT ON MOBILE VIEW */
+
+/* Case: Default */
+.navbar_default {
     display:  flex;
-
     gap: clamp( calc(20px), calc(0.5rem + 9vw), calc(50rem) ) ;
-
     align-items: center;
 }
 .navbar_default a, .navbar_default button {
@@ -24,12 +36,6 @@
     background-color: transparent;
     border: none;
     color: var(--extra-light-color);
-}
-.navbar_default_logo {
-    width: clamp(calc(calc(25px + 2vw)), 5%, 3rem);
-}
-.navbar_default_logo > img {
-    width: 100%;
 }
 
 .navbar_default_infos {
@@ -44,3 +50,24 @@
     width: 100%;
     border-radius: 50%;
 } 
+
+
+/* Case: Nothing is focused */
+.navbar_searchbar-nofocus {
+    width: 100%;
+    display: flex;
+    justify-content: space-between; 
+    align-items: center; 
+}
+.navbar_searchbar-nofocus_logo > svg{ 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+
+
+
+/*END: STYLES FOR EACH NAVBAR'S CONTENT ON MOBILE VIEW */
+

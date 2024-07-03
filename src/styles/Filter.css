@@ -5,6 +5,10 @@
     align-content: center;
     height: 1.7rem;
     width: 100%;
+    transform: translateX( var(--dropdown-sameness-translate-value));
+}
+.filter--standalone {
+    transform: translateX( var(--searchbar-sameness-translate-value)/2);
 }
 .filter * {
     font-size: 1rem;
@@ -16,7 +20,9 @@
 /* STYLES FOR THE DROPDOWN */
 
 .categories-component {
-    transform: translateX(calc(var(--dropdown-padding-horizontal) * 0.7));
+    
+    /* did This in order to create the "sameness illusion between dropdown and searchbar */
+    transform: translateX( var(--dropdown-sameness-translate-value) );
     z-index: 10;
     
     width: auto;
@@ -103,10 +109,19 @@
     justify-content: space-between;
     align-items: center;
 
-    transform: translateX( calc( var(--dropdown-padding-horizontal) * -0.7));
+    /* did This in order to create the "sameness illusion between dropdown and searchbar */
+    transform: translateX( var(--searchbar-sameness-translate-value));
     
     padding: var(--dropdown-padding-vertical) var(--dropdown-padding-horizontal);
 }
+
+.search-component--in-navbar {
+    border: solid var(--dark-elements-color) 0.1rem;
+    background-color: var(--extra-light-color);
+}
+.search-component--in-navbar > input {
+}
+
 .search-component_bar {
     background-color: transparent;
     color: #fff;

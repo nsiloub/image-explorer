@@ -1,7 +1,7 @@
 import Filter from "./Filter";
 import "../styles/Navbar.css";
 import { MyHeaderProps } from "./Header";
-import { Dispatch, useEffect, useMemo, useState } from "react";
+import { Dispatch, useEffect, useState } from "react";
 import { LogoIcon } from "./Icons";
 import { appColors } from "../helpers/variables";
 
@@ -48,17 +48,16 @@ export default function NavBar(props: MyNavbarProps): ReactJsxElm {
         )
     }
 
-    function NothingIsFocusedInNavbar(): ReactJsxElm {
+    function NothingIsExpandedInNavbar(): ReactJsxElm {
         function handleSearchBtnClick(): void {
-            // props.setDisplayFilterElmCounter(props.displayFilterElmCounter + 1);
-            
-            
+
             //! To Implement: Preset a temporary input value corresponding
             //  to the recent user's search, using the "searchbarInputElmValue" state' value
-            console.log("got some value = ", searchbarInputElmValue);
-            console.log("recent search value = ", props.searchValue);
+            // console.log("got some value = ", searchbarInputElmValue);
+            // console.log("recent search value = ", props.searchValue);
+            
+            setNavbarContent(<ExpandedSearchbarInNavbar />)
 
-            setNavbarContent(<FocusedSearchBar />)
         }
 
         return (
@@ -75,13 +74,19 @@ export default function NavBar(props: MyNavbarProps): ReactJsxElm {
         )
     };
 
-    function FocusedSearchBar(): ReactJsxElm {
+    function ExpandedSearchbarInNavbar(): ReactJsxElm {
         return (
-        <div className="navbar_focusedSearchBar">
-            <button className="focusedSearchBar_goBackBtn">
+        <div className="navbar_expanded-searchbar">
+            <button className="navbar_expanded-searchbar_backbtn">
                 <img src="src/assets/go-back-icon.svg" alt="" />
             </button>
-            <Filter category={props.category} changeCategory={props.changeCategory} changeSearchValue={props.changeSearchValue}/>
+            <Filter 
+                category={props.category}
+                changeCategory={props.changeCategory}
+                changeSearchValue={props.changeSearchValue}
+                classList=""
+                searchElmClassList="search-component--in-navbar"
+            />
         </div>
         )
     };
@@ -92,59 +97,15 @@ export default function NavBar(props: MyNavbarProps): ReactJsxElm {
 
 
 
-    // function displayReactiveContent(): ReactJsxElm{
-    //     let elemToDisplay = <></>
-
-
-    //     function NoFocusedElm(): ReactJsxElm  {
-    //         return (
-    //         <div className="navbar_noFocusedElm">
-    //             <button className="navbar_noFocusedElm_searchBtn">
-    //             <img src="src/assets/single-search-logo.svg"
-    //             alt="Search Icon" />
-    //             </button>
-    //             <button className="navbar_noFocusedElm_menuBtn">
-    //             <img src="src/assets/bars-solid.svg" alt="Menu Icon" />
-    //             </button>
-    //         </div>
-    //         )
-    //     }
-
-    //     function FocusedSearchBar(): ReactJsxElm {
-    //         return (
-    //         <div className="navbar_focusedSearchBar">
-    //             <button className="focusedSearchBar_goBackBtn">
-    //             <img src="src/assets/go-back-icon.svg" alt="" />
-    //             </button>
-    //             <Filter category={category} changeCategory={changeCategory} changeSearchValue={changeSearchValue} />
-    //         </div>
-    //         )
-    //     };
-
-    //     function AppInfo(): ReactJsxElm {
-    //         return (
-    //         <div className="navbar_appinfo">
-    //             <button className="focusedSearchBar_goBackBtn">
-    //             <img src="src/assets/go-back-icon.svg" alt="" />
-    //             </button>
-    //             <Infos />
-    //         </div>
-    //         )
-    //     }
-
-    //     //on first load (default), if header is not fixed;
-    //     elemToDisplay = <Infos />; 
-
-    //     //if header is fixed and searchBar is NOT focused
-    //     elemToDisplay = NoFocusedElm();
-    
-    //     // if searchbar is focused and header is fixed
-    //     elemToDisplay = FocusedSearchBar()
-    
-    //     // If the infos are focused, and the header is fixed;
-    //     elemToDisplay = AppInfo()
-
-    //     return elemToDisplay
+    // function AppInfo(): ReactJsxElm {
+    //     return (
+    //     <div className="navbar_appinfo">
+    //         <button className="focusedSearchBar_goBackBtn">
+    //         <img src="src/assets/go-back-icon.svg" alt="" />
+    //         </button>
+    //         <Infos />
+    //     </div>
+    //     )
     // }
 
 
@@ -166,26 +127,24 @@ export default function NavBar(props: MyNavbarProps): ReactJsxElm {
             intersectionObserver.disconnect()
         }
 
-    }, [props.headerIsFixed, props.setHeaderIsFixed]);
+    }, [props.headerIsFixed]);
 
     
     // handling the case where searchbar is 
     // focused while header is fixed
-    useMemo(() => {
+    useEffect(() => {
         if(props.headerIsFixed ) {
             if(!props.searchBarIsFocused || searchbarInputElmValue ) {
                 
                 //Change the navbarContent
-                setNavbarContent(<NothingIsFocusedInNavbar />); 
-                
-
+                setNavbarContent(<NothingIsExpandedInNavbar />); 
             }
         }
 
         return () => {
             setNavbarContent(<DefaultContentInNavbar />)
         }
-    }, [props.headerIsFixed, props.searchBarIsFocused, props.displayFilterElmCounter, props.setDisplayFilterElmCounter, props.searchValue, searchbarInputElmValue ]);
+    }, [props.headerIsFixed, props.searchBarIsFocused, props.displayFilterElmCounter, props.searchValue, searchbarInputElmValue ]);
 
 
 

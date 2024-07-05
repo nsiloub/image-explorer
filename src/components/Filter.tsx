@@ -1,5 +1,7 @@
-import { Dispatch, useState, useEffect } from "react";
+import { Dispatch, useState, useEffect, useMemo } from "react";
+import "../styles/Filter.css";
 import "../styles/Filter.css"
+import { useObserveSizesAndUpdateBooleanStates } from "../helpers/customHooks";
 type ReactJsxElm = React.JSX.Element;
 
 
@@ -12,10 +14,11 @@ type MyCategoriesProps = {
 function Categories({selectedCategory, changeCategory}: MyCategoriesProps): ReactJsxElm {
     
     const [dropdownHidden, setDropdownHidden] = useState(true);
-    const [focusCounter, setFocusCounter] = useState(0);
+    const [dropdownFocusCounter, setDropdownFocusCounter] = useState(0);
 
-    const query = matchMedia("(max-width: 330px)");
-    const [smallFilter, setSmallFilter] = useState(query.matches);
+    const [smallFilter, setSmallFilter] = useState(matchMedia("(max-width: 330px)").matches);
+
+
     const dropdownIcon =  document.querySelector<HTMLSpanElement>(".category-component_dropdown-btn_icon");
     const menuWrapper = document.querySelector<HTMLDivElement>(".categories-component_menu-wrapper");
     const dropDownBtn = document.querySelector<HTMLButtonElement>('.category-component_dropdown-btn');
@@ -40,16 +43,16 @@ function Categories({selectedCategory, changeCategory}: MyCategoriesProps): Reac
             if(!classList.contains("refocus-dropdown")){
                 setDropdownHidden(true);
                 
-                setFocusCounter(0)
+                setDropdownFocusCounter(0)
             };
             if(classList.contains("refocus-dropdown")) {
                 setDropdownHidden(false);
 
-                setFocusCounter(focusCounter + 1);     
+                setDropdownFocusCounter(dropdownFocusCounter + 1);     
             }
         };
 
-        if(focusCounter % 2 === 0) {
+        if(dropdownFocusCounter % 2 === 0) {
             setDropdownHidden(true)
         } else {
             setDropdownHidden(false)
@@ -60,7 +63,7 @@ function Categories({selectedCategory, changeCategory}: MyCategoriesProps): Reac
             window.removeEventListener("mousedown", handleClickedAway);
             dropDownBtn?.removeEventListener("focus", handleDropDownFocus);
         }
-    }, [dropdownHidden, focusCounter, dropDownBtn, changeCategory]);
+    }, [dropdownHidden, dropdownFocusCounter, dropDownBtn, changeCategory]);
    
 
     switch(dropdownHidden) {
@@ -87,15 +90,8 @@ function Categories({selectedCategory, changeCategory}: MyCategoriesProps): Reac
     });
 
     // Effect for switching the state of smallFilter
-    useEffect(() => {
-        query.addEventListener("change", handleWidthChange);
-        function handleWidthChange(event: MediaQueryListEvent): void {
-            event.matches ? setSmallFilter(true) : setSmallFilter(false);
-        }
-        return () => {
-            query.removeEventListener("change", handleWidthChange);
-        }
-    }, [query]);
+    useObserveSizesAndUpdateBooleanStates("max-width", "330px", setSmallFilter)
+    
     
     let buttonContent: ReactJsxElm = <div className="dropdown-btn_big refocus-dropdown">
         <p className="category-component_dropdown-btn_title refocus-dropdown">{selectedCategory}</p>
@@ -190,44 +186,47 @@ function Search({category, changeSearchValue, }: MySearcProps): ReactJsxElm {
 
 
         }
-    }, [searchBarIsFocused, clearSearchBtnFocused, searchBar, clearSearchBtn, changeSearchValue] );
+    }, [changeSearchValue, clearSearchBtn, searchBar] );
 
     // Hiding Or Showing search icon and clear button accordingly
-    if(!searchBarIsFocused) {
-        searchBarIcon?.classList.remove("hide");
-        clearSearchBtn?.classList.add("hide");
-    };
-    if(searchBarIsFocused) {
-        clearSearchBtn?.classList.remove("hide");
-        searchBarIcon?.classList.add("hide");
-    };
-    if(searchBar?.value.length && searchBar?.value.length > 0) {
-        clearSearchBtn?.classList.remove("hide");
-        searchBarIcon?.classList.add("hide");
-    };
+    useMemo(() => {
+        if(!searchBarIsFocused) {
+            searchBarIcon?.classList.remove("hide");
+            clearSearchBtn?.classList.add("hide");
+        };
+        if(searchBarIsFocused) {
+            clearSearchBtn?.classList.remove("hide");
+            searchBarIcon?.classList.add("hide");
+        };
+        if(searchBar?.value.length && searchBar?.value.length > 0) {
+            clearSearchBtn?.classList.remove("hide");
+            searchBarIcon?.classList.add("hide");
+        };
 
+    }, [clearSearchBtn?.classList, searchBar?.value.length, searchBarIcon?.classList, searchBarIsFocused])
+
+
+    // For automatically applying the search value after a certain time
+    useEffect(() => {
+        searchBar?.addEventListener("keyup", handleUserKeyUped);
+        function handleUserKeyUped(e: Event): void {
+            const target = e.target as HTMLInputElement
+
+            const delay = 1500;
+
+            let sendTextTimeout: number | undefined = undefined;
+
+            if (sendTextTimeout) {
+                clearTimeout(sendTextTimeout);
+            }
+
+            sendTextTimeout = window.setTimeout(() => {
+                changeSearchValue(target.value);
+            }, delay);
+        };
+
+    }, [changeSearchValue, searchBar]);
     
-    searchBar?.addEventListener("keyup", handleUserKeyUped);
-    function handleUserKeyUped(e: Event): void {
-        const target = e.target as HTMLInputElement
-
-        const delay = 1500;
-
-        let sendTextTimeout: number | undefined = undefined;
-
-        if (sendTextTimeout) {
-            clearTimeout(sendTextTimeout);
-        }
-
-        sendTextTimeout = window.setTimeout(() => {
-            changeSearchValue(target.value);
-        }, delay);
-
-
-
-
-
-    };
     
     return(
         <div className="search-component">
@@ -243,12 +242,14 @@ export type MyFilterProps = {
     category: string,
     changeCategory: Dispatch<string>,
     changeSearchValue: Dispatch<string>,
+    className: string
 }
 
-export default function Filter({category, changeCategory, changeSearchValue}: MyFilterProps): ReactJsxElm {
-    
+
+export default function Filter({category, changeCategory, changeSearchValue, className}: MyFilterProps): ReactJsxElm {
+
     return (
-        <div className="filter">
+        <div className={`filter ${className}`}>
             <Categories selectedCategory={category} changeCategory={changeCategory} />
             <Search category={category} changeSearchValue={changeSearchValue}/>
         </div>

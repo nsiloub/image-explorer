@@ -105,39 +105,24 @@ function FilterableGallery(): ReactJsxElm {
     }
   };
 
-  
-
-  function displayContentOrLoadings(): ReactNode {
-    let mainContentToDisplay: ReactJsxElm = <></>;
-
-
-    if(dataIsLoading) {
-      mainContentToDisplay = <>
-        <LoadingCardList />    
-      </>
-    };
-    if(!dataIsLoading && dataResult.arrOfResults?.length > 0) {
-      mainContentToDisplay = <>
-        <ResultsMsg searchTerm={searchValue} numberOfRuslts={dataResult.totalAccessibleImages} selectedCategory={category}/>
-        <CardList setClickedPhotoObj={setClickedPhotoObj} data={dataResult.arrOfResults} setImageIsFocused={setImgIsFocused}/>
-        <Pagination  dataResult={dataResult} resultsPerPage={resultsPerPage} setCurrentPage={setPageNumberToDisplay} currentPage={pageNumberToDisplay} />
-      </>
-    };
-    if(!dataIsLoading && dataResult.arrOfResults?.length === 0) {
-      mainContentToDisplay = <>
-        <ResultsMsg searchTerm={searchValue} numberOfRuslts={0} selectedCategory={category}/>
-      </>
-    }
-
-    return mainContentToDisplay;
-  }
-
   return (
     <div className="filterable-gallery">
       <FocusedImage imageIsFocused={imgIsFocused} setImageIsFocused={setImgIsFocused} clickedPhoto={clickedPhotoObj}/>
       <Header category={category} changeCategory={setCategory} searchValue={searchValue} changeSearchValue={setSearchValue}/>
       <main>
-        {displayContentOrLoadings()}
+
+        {dataIsLoading && <LoadingCardList />}
+        
+        {!dataIsLoading && dataResult.arrOfResults?.length > 0 &&<>
+          <ResultsMsg searchTerm={searchValue} numberOfRuslts={dataResult.totalAccessibleImages} selectedCategory={category}/>
+          <CardList setClickedPhotoObj={setClickedPhotoObj} data={dataResult.arrOfResults} setImageIsFocused={setImgIsFocused}/>
+          <Pagination  dataResult={dataResult} resultsPerPage={resultsPerPage} setCurrentPage={setPageNumberToDisplay} currentPage={pageNumberToDisplay} />
+        </>}
+
+        {!dataIsLoading && dataResult.arrOfResults?.length === 0 && <>
+          <ResultsMsg searchTerm={searchValue} numberOfRuslts={0} selectedCategory={category}/>
+        </>}
+
       </main>
       <Footer />
     

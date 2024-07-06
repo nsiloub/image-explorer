@@ -1,0 +1,67 @@
+header {
+    width: 100%;
+}
+/* header button {
+    background-color: transparent;
+    border: none;
+} */
+.header--not-fixed {
+    background-color: var(--vivid-elements-color);
+    background-image: var(--header-gradient), url("src/assets/nature-g4ed01dd97_1280.jpg");
+    background-size: cover;
+    padding: 2rem 0;
+    padding-top: 0.8rem; 
+    
+    /* display: grid;
+    grid-template-rows: 1fr 1fr;
+    gap: 0.8rem;
+    justify-items: center; */
+
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-template-rows: auto auto auto;
+    grid-template-areas: "logo infogroup" "title title" "filter filter";
+}
+.header--not-fixed .header_info-group * {
+    color: var(--extra-light-color);
+}
+
+.header--fixed {
+  position: fixed;
+  top: 0 ;
+  background-color: var(--light-elements-color);
+  padding: 0.8rem 0;
+}
+
+.header_logo-icon {
+    width: clamp(calc(calc(25px + 2vw)), 5%, 3rem);
+    grid-area: logo;
+}
+.header_back-icon {
+    grid-area: back;
+}
+.header_info-icon {
+    grid-area: infoicon;
+}
+.header_info-group {
+    grid-area: infogroup;
+    justify-self: end;
+
+    /* width: 100%; */
+    display: grid;
+    grid-template-columns: auto auto clamp(calc(calc(25px + 2vw)), 5%, 3rem);
+}
+.header_apptitle {
+    font-size: clamp(calc(0.8rem + 2.5vw), 6vw, 2.5rem);
+    color: var(--extra-light-color);
+    font-family: "CHASER";
+
+    grid-area: title;
+    justify-self: center;
+}
+.header_filter {
+    grid-area: filter;
+    justify-self: center;
+    background-color: greenyellow;
+    /* transform: translateX( calc( var(--searchbar-sameness-translate-value))); */
+}

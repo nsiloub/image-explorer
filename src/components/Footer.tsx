@@ -26,7 +26,7 @@ export default function Footer(): ReactJsxElm {
                         <a href="https://www.linkedin.com/in/nsiloup/" target="blank">
                             <img src="src/assets/linkedin.png" alt="My LinkedIn Account" />
                         </a>
-                        <a href="https://github.com/nsiloup">
+                        <a href="https://github.com/nsiloub">
                             <img src="src/assets/github.png" alt="My Github Account" />
                         </a>
                         <a href="https://twitter.com/nsiloubp" target="blank">

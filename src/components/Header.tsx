@@ -1,4 +1,4 @@
-import { Dispatch, useState } from "react";
+import { Dispatch, useEffect, useState } from "react";
 import { appColors } from "../helpers/variables";
 import Filter from "./Filter";
 import { LogoIcon } from "./Icons";
@@ -31,6 +31,26 @@ export default function Header({ category, changeCategory, changeSearchValue, se
     useObserveSizesAndUpdateBooleanStates("max-width", "330px", setWindowIsExtraSmall );
 
 
+    // Effect to fix the header and add styles
+    // Css's sticky property wasn't working accross multiple
+    // browsers, so i had to use some JS/TS for that
+    useEffect(() => {
+        const header = document.querySelector<HTMLElement>("header");
+        
+        const intersectionObserver = new IntersectionObserver((entries) => {
+            if(entries[0].intersectionRatio <= 0) {
+                setHeaderIsFixed(true);
+            }
+
+        });
+        header && intersectionObserver.observe(header);
+        return () => {
+            intersectionObserver.disconnect()
+        }
+
+    }, [headerIsFixed]);
+
+
     return (
         <header className={ 
             !headerIsFixed ? "header--not-fixed" : "header--fixed" 
@@ -46,15 +66,15 @@ export default function Header({ category, changeCategory, changeSearchValue, se
                 <img src="src/assets/infoIcon.svg" alt="Info icon" />
             </button>}
 
-            {<ul className="header_info-group">
-                <li><a href="#aboutus">About Us</a></li>
-                <li><a href="#contacts">Contacts</a></li>
-                <li><button><img src="https://avatars.githubusercontent.com/u/71090230?s=400&u=a0e3cf64f7329d3bbad75547e25b67724e0d10c7&v=4" alt="account picrture" /></button></li>
-            </ul>}
+            {<div className="header_info-group">
+                <a href="#aboutus">About Us</a>
+                <a href="#contacts">Contacts</a>
+                <button><img src="https://avatars.githubusercontent.com/u/71090230?s=400&u=a0e3cf64f7329d3bbad75547e25b67724e0d10c7&v=4" alt="account picrture" /></button>
+            </div>}
 
             {!headerIsFixed && <p className="header_apptitle">Image Explorer</p>}
 
-            <Filter className="header_filter" category={category} changeCategory={changeCategory} changeSearchValue={changeSearchValue}/>
+            <Filter className={`header_filter ${headerIsFixed ? "header--fixed_filter" : "header--not-fixed_filter"}`} category={category} changeCategory={changeCategory} changeSearchValue={changeSearchValue}/>
         </header>        
     )
 }

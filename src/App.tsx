@@ -124,7 +124,7 @@ function FilterableGallery(): ReactJsxElm {
         </>}
 
       </main>
-      <Footer />
+      {/* <Footer /> */}
     
     </div>
   )

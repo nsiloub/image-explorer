@@ -128,12 +128,13 @@ function Categories({selectedCategory, changeCategory}: MyCategoriesProps): Reac
 type MySearcProps = {
     category: MyFilterProps["category"],
     changeSearchValue: MyFilterProps["changeSearchValue"],
+    searchBarIsFocused: MyFilterProps["searchBarIsFocused"],
+    setSearchBarIsFocused: MyFilterProps["setSearchBarIsFocused"],
+    clearSearchBtnFocused: MyFilterProps["clearSearchBtnFocused"],
+    setClearSearchBtnFocused: MyFilterProps["setClearSearchBtnFocused"],
+
 };
-function Search({category, changeSearchValue, }: MySearcProps): ReactJsxElm {
-    const  [searchBarIsFocused, setSearchBarIsFocused] = useState(false);
-    const [clearSearchBtnFocused, setClearSearchBtnFocused] = useState(false);
-
-
+function Search({category, changeSearchValue, searchBarIsFocused, setSearchBarIsFocused, clearSearchBtnFocused, setClearSearchBtnFocused}: MySearcProps): ReactJsxElm {
 
     const description: string = `Search for ${category} images`;
     const searchBar = document.querySelector<HTMLInputElement>("#searchbar")
@@ -186,7 +187,7 @@ function Search({category, changeSearchValue, }: MySearcProps): ReactJsxElm {
 
 
         }
-    }, [changeSearchValue, clearSearchBtn, searchBar] );
+    }, [changeSearchValue, clearSearchBtn, searchBar, setClearSearchBtnFocused, setSearchBarIsFocused] );
 
     // Hiding Or Showing search icon and clear button accordingly
     useMemo(() => {
@@ -242,16 +243,21 @@ export type MyFilterProps = {
     category: string,
     changeCategory: Dispatch<string>,
     changeSearchValue: Dispatch<string>,
-    className: string
+    filterClassName: string,
+    searchBarIsFocused: boolean,
+    setSearchBarIsFocused: Dispatch<boolean>
+    clearSearchBtnFocused: boolean,
+    setClearSearchBtnFocused: Dispatch<boolean>
+
 }
 
 
-export default function Filter({category, changeCategory, changeSearchValue, className}: MyFilterProps): ReactJsxElm {
+export default function Filter({category, changeCategory, changeSearchValue, filterClassName, searchBarIsFocused, setSearchBarIsFocused, clearSearchBtnFocused, setClearSearchBtnFocused}: MyFilterProps): ReactJsxElm {
 
     return (
-        <div className={`filter ${className}`}>
+        <div className={`filter ${filterClassName}`}>
             <Categories selectedCategory={category} changeCategory={changeCategory} />
-            <Search category={category} changeSearchValue={changeSearchValue}/>
+            <Search category={category} changeSearchValue={changeSearchValue} searchBarIsFocused={searchBarIsFocused} setSearchBarIsFocused={setSearchBarIsFocused} clearSearchBtnFocused={clearSearchBtnFocused} setClearSearchBtnFocused={setClearSearchBtnFocused}/>
         </div>
     )
 }
